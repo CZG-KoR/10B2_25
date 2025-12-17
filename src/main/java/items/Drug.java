@@ -8,13 +8,20 @@ package items;
  *
  * @author administrator
  */
-public class Drug extends Item {
+public class Drug extends Item implements crafteable{
     
     Ingredient[] ingredients;
+    int qualety;
 
-    public Drug(String name, int value, Ingredient[] ingredients) {
-        super(name, value);
+    public Drug(String name, int value, Ingredient[] ingredients,int qualety) {
+        super(name, value, true);
         this.ingredients = ingredients;
+        this.qualety= qualety;
+    }
+    public Drug(String name, int value) {
+        super(name, value, false);
+        this.ingredients = null;
+        this.qualety=0;
     }
 
     @Override
@@ -25,7 +32,9 @@ public class Drug extends Item {
     public void sell(int amount) {
     }
 
-    
-        
-    
+
+    @Override
+    public void craft(int amount, Ingredient[] incregredients) {
+
+    }
 }
