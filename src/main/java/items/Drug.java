@@ -4,6 +4,8 @@
  */
 package items;
 
+import java.awt.*;
+
 /**
  *
  * @author administrator
@@ -13,13 +15,23 @@ public class Drug extends Item implements crafteable{
     Ingredient[] ingredients;
     int qualety;
 
-    public Drug(String name, int value, Ingredient[] ingredients,int qualety) {
-        super(name, value, true);
+    public Drug(String name, int value, Ingredient[] ingredients, Image img) {
+        super(name, value, true,img);
         this.ingredients = ingredients;
-        this.qualety= qualety;
+        this.qualety= 0;
     }
-    public Drug(String name, int value) {
-        super(name, value, false);
+    public Drug(String name, int value,Image img) {
+        super(name, value, false,img);
+        this.ingredients = null;
+        this.qualety=0;
+    }
+    public Drug(String name, int value, Ingredient[] ingredients,int qualety, Image img) {
+        super(name, value, true,img);
+        this.ingredients = ingredients;
+        this.qualety= 0;
+    }
+    public Drug(String name, int value,int qualety,Image img) {
+        super(name, value, false,img);
         this.ingredients = null;
         this.qualety=0;
     }
@@ -35,6 +47,19 @@ public class Drug extends Item implements crafteable{
 
     @Override
     public void craft(int amount, Ingredient[] incregredients) {
+
+    }
+
+
+    private class DrugColection{
+
+        Drug Cocain= new Drug("Koks",100,Ingredient.IngredientColection.cocainingredients,0,null);
+
+        Drug MagicMushroom = new Drug("Magic-mushroom",10,null);
+
+        Drug Skittlez = new Drug("Skittlez",20,null);
+        Drug LemonHaze= new Drug("Lemon Haze",12,null);
+        Drug OGKush =new Drug("OG Kush",10,null);
 
     }
 }
