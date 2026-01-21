@@ -1,11 +1,20 @@
-package gamelogic;
+package gameObject;
 
-import items.Item;
+import gameObject.items.Item;
 
-public class Storage {
+public class Storage extends GameObject {
     Item[] items;
-    int Amount[];
-    public Storage(int Zise){
+    int amount[];
+
+
+    int colums;
+    int rows;
+
+    public Storage(int colums,int rows,int positionX,int positionY){
+        super(null,positionX,positionY,0,0);
+        int Zise = rows*colums;
+        this.rows=rows;
+        this.colums=colums;
         this.items=new Item[Zise];
     }
 
@@ -19,11 +28,11 @@ public class Storage {
     }
 
     public int[] getAmounts() {
-        return Amount;
+        return amount;
     }
 
     public void setAmount(Storage storage, int pos, int amount) {
-        storage.Amount[pos]=amount;
+        storage.amount[pos]=amount;
     }
 
     public Item getItem(Storage storage, int pos) {
@@ -40,7 +49,7 @@ public class Storage {
 
         for (int i = 0; i < targetStorage.items.length; i++) {
             if (targetStorage.items[i] == sourceStorage.items[pos]) {
-                targetStorage.Amount[i] = targetStorage.Amount[i]+ sourceStorage.Amount[pos];
+                targetStorage.amount[i] = targetStorage.amount[i]+ sourceStorage.amount[pos];
                 emtyPos(sourceStorage,pos);
                 return ;
             }
@@ -48,7 +57,7 @@ public class Storage {
         for (int i = 0; i < targetStorage.items.length; i++) {
             if (targetStorage.items[i] == null) {
                 targetStorage.items[i]= sourceStorage.items[pos];
-                targetStorage.Amount[i] = sourceStorage.Amount[pos];
+                targetStorage.amount[i] = sourceStorage.amount[pos];
                 emtyPos(sourceStorage,pos);
                 return ;
             }
@@ -62,20 +71,20 @@ public class Storage {
     Ein Item wird aus einem Source Lager in den ausgewählten Slot im Ziel-Lager verschoben.*/
     public void addOneItem(Storage ziehlStorage, Storage sourceStorage, int sourcePos, int ziehlPos) {
         if(ziehlStorage.items[ziehlPos]== sourceStorage.items[sourcePos]){
-            if (sourceStorage.Amount[sourcePos]>0) {
-                ziehlStorage.Amount[ziehlPos]++;
-                sourceStorage.Amount[ziehlPos]--;
+            if (sourceStorage.amount[sourcePos]>0) {
+                ziehlStorage.amount[ziehlPos]++;
+                sourceStorage.amount[ziehlPos]--;
             }
-            if (sourceStorage.Amount[sourcePos]==0){
+            if (sourceStorage.amount[sourcePos]==0){
             emtyPos(sourceStorage,sourcePos);}
         }
         if(ziehlStorage.items[ziehlPos]==null){
-            if (sourceStorage.Amount[sourcePos]>0) {
+            if (sourceStorage.amount[sourcePos]>0) {
                 ziehlStorage.items[ziehlPos]= sourceStorage.items[sourcePos];
-                ziehlStorage.Amount[ziehlPos]++;
-                sourceStorage.Amount[ziehlPos]--;
+                ziehlStorage.amount[ziehlPos]++;
+                sourceStorage.amount[ziehlPos]--;
             }
-            if (sourceStorage.Amount[sourcePos]==0){
+            if (sourceStorage.amount[sourcePos]==0){
                 emtyPos(sourceStorage,sourcePos);}
         }
 
@@ -83,7 +92,7 @@ public class Storage {
     }
 
     private void emtyPos(Storage storage, int pos){
-        storage.Amount[pos]=0;
+        storage.amount[pos]=0;
         storage.items[pos]=null;
     }
 

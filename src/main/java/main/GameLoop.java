@@ -1,19 +1,25 @@
 package main;
 
+import gameObject.GameObjekts;
 import gamelogic.GameLogic;
 import helper.Pause;
 
-public class GameLoop extends GamePanel {
+import java.awt.*;
+import java.awt.image.ImageObserver;
+import java.text.AttributedCharacterIterator;
 
-    public void startGameLoop(Thread gameTread,int FpsUps){
+public class GameLoop extends GamePanel {
+static GamePanel gamePanel;
+    public void startGameLoop(Thread gameTread, GameObjekts gameObjekts,int FpsUps){
+        gamePanel=new GamePanel();
         while (gameTread != null){
 
             //Timer Strart
             long start =System.nanoTime();
 
             //gameLoop
-            GameLogic.update();
-            repaint();
+            GameLogic.update(gamePanel,gameObjekts);
+            gamePanel.repaint();
 
             //Timer Ende
             long finish =System.nanoTime();
@@ -26,6 +32,10 @@ public class GameLoop extends GamePanel {
 
         }
     }
+
+
+
+
 
 
 }

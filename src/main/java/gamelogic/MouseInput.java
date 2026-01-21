@@ -9,7 +9,8 @@ public class MouseInput extends MouseAdapter{
     
     
     public void mouseClicked(MouseEvent e) {
-    
+    e.getX();
+    e.getY();
     }
             
 }

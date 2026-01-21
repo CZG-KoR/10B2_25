@@ -1,4 +1,4 @@
-package items;
+package gameObject.items;
 
 public interface crafteable {
 

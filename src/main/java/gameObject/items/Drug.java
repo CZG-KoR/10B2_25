@@ -2,7 +2,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package items;
+package gameObject.items;
 
 import java.awt.*;
 
@@ -16,22 +16,22 @@ public class Drug extends Item implements crafteable{
     int qualety;
 
     public Drug(String name, int value, Ingredient[] ingredients, Image img) {
-        super(name, value, true,img);
+        super(img,name, value, true);
         this.ingredients = ingredients;
         this.qualety= 0;
     }
     public Drug(String name, int value,Image img) {
-        super(name, value, false,img);
+        super(img,name, value, false);
         this.ingredients = null;
         this.qualety=0;
     }
     public Drug(String name, int value, Ingredient[] ingredients,int qualety, Image img) {
-        super(name, value, true,img);
+        super(img,name, value, true);
         this.ingredients = ingredients;
         this.qualety= 0;
     }
     public Drug(String name, int value,int qualety,Image img) {
-        super(name, value, false,img);
+        super(img,name, value, false);
         this.ingredients = null;
         this.qualety=0;
     }

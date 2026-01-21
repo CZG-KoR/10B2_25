@@ -2,20 +2,25 @@ package main;
 
 
 
+import gameObject.GameObject;
+import gameObject.GameObjekts;
+
 import javax.swing.*;
 import java.awt.*;
 
-public class GamePanel extends JPanel implements Runnable {
 
+public class GamePanel extends JPanel implements Runnable {
+GameObjekts gameObjekts;
     final int orignialTileZise = 32;
     final int colums =32;
     final int rows =32;
     final int defaultwidth = orignialTileZise*colums;
     final int defaultheight = orignialTileZise*rows;
-    final int FpsUps=60;
+    final int FpsUps=30;
     Thread gameTread;
 
     public GamePanel(){
+
         this.setPreferredSize(new Dimension(defaultwidth,defaultheight));
         this.setBackground(Color.darkGray);
         this.setDoubleBuffered(true);
@@ -28,8 +33,21 @@ public class GamePanel extends JPanel implements Runnable {
     @Override
     public void run() {
         startGameTread();
-        GameLoop g= new GameLoop();
-        g.startGameLoop(gameTread,FpsUps);
+        GameLoop gameLoop= new GameLoop();
+        gameObjekts =new GameObjekts();
+        gameLoop.startGameLoop(gameTread,gameObjekts,FpsUps);
+    }
+    public void paintComponent(Graphics g){
+        super.paintComponent(g);
+        Graphics2D g2d= (Graphics2D) g;
+        g2d.setColor(Color.white);
+        g2d.drawRect(1,1,100,100);
+        for (int i = 0; i <gameObjekts.getGameObjects().size(); i++) {
+           GameObject aktuellesGameobjekt= gameObjekts.getGameObjects().get(i);
+            g2d.drawImage(aktuellesGameobjekt.getImg(),aktuellesGameobjekt.g);
+        }
+
+        System.out.println("Painting");
     }
 
 

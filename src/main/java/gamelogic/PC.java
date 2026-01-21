@@ -1,7 +1,7 @@
 
 package gamelogic;
 
-import items.Item;
+import gameObject.items.Item;
 
 
 public class PC {

@@ -1,11 +1,13 @@
-package items;
+package gameObject.items;
 
 import java.awt.*;
 
 public class Ingredient extends Item{
 
-    public Ingredient(String name, int value, Image img) {
-        super(name, value,false,img);
+    public Ingredient(Image img,String name, int value) {
+        super(img, name, value,false);
+
+
     }
 
     @Override
@@ -20,7 +22,7 @@ public class Ingredient extends Item{
 
     public static class IngredientColection{
 
-        static Ingredient placeholder =new Ingredient("This is a temporary Placeholder",1,null);
+        static Ingredient placeholder =new Ingredient(null,"This is a temporary Placeholder",1);
        static Ingredient[] cocainingredients ={placeholder};
 
 
