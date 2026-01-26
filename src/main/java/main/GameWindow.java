@@ -6,6 +6,9 @@ import javax.swing.*;
 
 import java.awt.*;
 
+/**
+ * Fenster, in welchem das Spiel ausgeführt wird (bitte nicht anfassen ohne zu fragen!!!!)
+ */
 public class GameWindow {
 
     public static void openWindow(){
