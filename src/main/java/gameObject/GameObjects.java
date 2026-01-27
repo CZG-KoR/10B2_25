@@ -4,13 +4,13 @@ import java.util.ArrayList;
 /**
  * Klasse zum Verwalten und Speichern von GameObjekten
  */
-public class GameObjekts {
+public class GameObjects {
     ArrayList<GameObject> gameObjects = new ArrayList<>();//Liste zum Speichern aller Game Objekte
 
     /**
      * Lehrer construktor -> Neue Game Objekt listen sind standarmäßig lehr
      */
-    public GameObjekts(){
+    public GameObjects(){
     }
 
     /**
@@ -37,11 +37,11 @@ public class GameObjekts {
 
     /**
      * Methode zum Hinzufügen einer Liste an GameObjekten zu einer bereits bestehenden Liste
-     * @param gameObjekts   Liste der hinzuzufügenden game Objekte
+     * @param gameObjects   Liste der hinzuzufügenden game Objekte
      */
-    public void addGameObjekts(GameObjekts gameObjekts){
-        for (int i = 0; i <gameObjekts.gameObjects.size(); i++) {
-        this.gameObjects.add(gameObjekts.gameObjects.get(i));
+    public void addGameObjekts(GameObjects gameObjects){
+        for (int i = 0; i < gameObjects.gameObjects.size(); i++) {
+        this.gameObjects.add(gameObjects.gameObjects.get(i));
         }
     }
 }

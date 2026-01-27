@@ -2,6 +2,8 @@ package gameObject;
 
 import gameObject.items.Item;
 
+import java.awt.*;
+
 /**
  * Klasse zum Verwalten von Items in Lagern
  */
@@ -19,8 +21,8 @@ public class Storage extends GameObject {
      * @param positionX Position der oberen Linken Ecke des Lagers (x-Koordinate)
      * @param positionY Position der oberen Linken Ecke des Lagers (y-Koordinate)
      */
-    public Storage(int colums,int rows,int positionX,int positionY){
-        super(null,false,1,positionX,positionY,0,0);
+    public Storage(Image img ,int layer,int positionX,int positionY,int colums,int rows){
+        super(img,false,layer,positionX,positionY,colums*32,rows*32);
         int Zise = rows*colums;
         this.rows=rows;
         this.colums=colums;

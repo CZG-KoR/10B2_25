@@ -3,7 +3,7 @@ package main;
 
 
 import gameObject.GameObject;
-import gameObject.GameObjekts;
+import gameObject.GameObjects;
 import gamelogic.GameLogic;
 import maps.MapBuilder;
 
@@ -16,7 +16,7 @@ import java.awt.event.ActionListener;
  * Game Pannel in welchem das Spiel Läuft
  */
 public class GamePanel extends JPanel implements Runnable {
-    GameObjekts gameObjekts; //liste aller gameObjekt im aktuellen gamePanel
+    GameObjects gameObjects; //liste aller gameObjekt im aktuellen gamePanel
     /**
      * Das Feld wird in Tiles unterteilt um Sicherzustellen,
      * dass die Gesammtauflösung ein Vielfaches der Tilezise ist und somit das tilen von Objkten der Standart Auflösung möglich ist
@@ -47,8 +47,8 @@ public class GamePanel extends JPanel implements Runnable {
     @Override
     public void run() {
 
-        gameObjekts =new GameObjekts();//Legt die GameObjekt Liste an
-        gameObjekts = MapBuilder.buildMap(gameObjekts); //Baut die Map (Initialisiert die GameObjekt Liste)
+        gameObjects =new GameObjects();//Legt die GameObjekt Liste an
+        gameObjects = MapBuilder.buildMap(gameObjects); //Baut die Map (Initialisiert die GameObjekt Liste)
 
         /**
          * Game Loop (Update -> repaint -> Pause)
@@ -56,7 +56,7 @@ public class GamePanel extends JPanel implements Runnable {
         Timer t = new Timer(delay, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                GameLogic.update(gameObjekts);
+                GameLogic.update(gameObjects,actionEvent);
                 repaint();
             }
         });
@@ -75,8 +75,8 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D g2d= (Graphics2D) g;
 
-        for (int i = 0; i <gameObjekts.getGameObjects().size(); i++) {
-           GameObject aktuellesGameobjekt= gameObjekts.getGameObjects().get(i);
+        for (int i = 0; i < gameObjects.getGameObjects().size(); i++) {
+           GameObject aktuellesGameobjekt= gameObjects.getGameObjects().get(i);
            if (aktuellesGameobjekt.isVisible()){
             g2d.drawImage(aktuellesGameobjekt.getImg(),aktuellesGameobjekt.getPositionX(),aktuellesGameobjekt.getPositionY(),null);
            }

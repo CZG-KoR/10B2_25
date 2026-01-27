@@ -1,10 +1,6 @@
 package maps;
 import gameObject.*;
 import helper.ImageLoader;
-import main.*;
-
-import javax.swing.*;
-import java.awt.*;
 
 /**
  * Klasse zum Bauen (Initialisiern) der Karte
@@ -12,12 +8,16 @@ import java.awt.*;
 public  class MapBuilder {
     /**
      * Methode zum Bauen (Initialisiern) der Karte
-     * @param gameObjekts Liste aller Gameobjekte der aktuellen Karte
+     * @param gameObjects Liste aller Gameobjekte der aktuellen Karte
      * @return Liste aller Gameobjekte nach dem Buen (Initialisieren) der Karte
      */
-    public  static GameObjekts buildMap(GameObjekts gameObjekts){
+    public  static GameObjects buildMap(GameObjects gameObjects){
         Background tempBackground =new Background( ImageLoader.loadImage("TempHintergrund.png"));
-        gameObjekts.addGameObjekt(tempBackground);
-        return gameObjekts;
+        gameObjects.addGameObjekt(tempBackground);
+        Storage tempstorage =new Storage(ImageLoader.loadImage("TempSprite.png"),1,10,10,10,10);
+        tempstorage.setVisible(true);
+        gameObjects.addGameObjekt(tempstorage);
+
+        return gameObjects;
     }
 }

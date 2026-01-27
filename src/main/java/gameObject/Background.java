@@ -10,6 +10,6 @@ public class Background extends GameObject {
      * @param img Bild des Hintergundes
      */
     public Background(Image img){
-        super(img,true,0,0,0,0,0);
+        super(img,true,0,0,0);
     }
 }

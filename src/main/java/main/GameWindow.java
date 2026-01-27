@@ -1,10 +1,8 @@
 package main;
 
-import gameObject.GameObjekts;
+import gameObject.GameObjects;
 
 import javax.swing.*;
-
-import java.awt.*;
 
 /**
  * Fenster, in welchem das Spiel ausgeführt wird (bitte nicht anfassen ohne zu fragen!!!!)
@@ -16,7 +14,7 @@ public class GameWindow {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
         window.setTitle("Pharmacy");
-        GameObjekts gameObjekts;
+       // GameObjects gameObjects;
     GamePanel gamePanel =new GamePanel();
             window.add(gamePanel);
             window.pack();
