@@ -7,7 +7,7 @@ import java.awt.*;
 /**
  * Klasse zum Verwalten von Items in Lagern
  */
-public class Storage extends GameObject {
+public class Storage extends GameObject implements Interactable{
 
     Item[] items; //Liste aller Items im Lager
     int amount[];//Liste der mengen der Items
@@ -71,6 +71,22 @@ public class Storage extends GameObject {
      */
     public Item getItem(Storage storage, int pos) {
         return items[pos];
+    }
+
+    public int getColums() {
+        return colums;
+    }
+
+    public void setColums(int colums) {
+        this.colums = colums;
+    }
+
+    public int getRows() {
+        return rows;
+    }
+
+    public void setRows(int rows) {
+        this.rows = rows;
     }
 
     /**
@@ -138,6 +154,30 @@ public class Storage extends GameObject {
     private void emtyPos(Storage storage, int pos){
         storage.amount[pos]=0;
         storage.items[pos]=null;
+    }
+
+    private int getMousePos(Storage storage,int xrelativeMousePosition, int yrelativeMousePosition){
+        int activeRow=yrelativeMousePosition/32;
+        int activeColum=xrelativeMousePosition/32;
+        int position=activeColum+activeRow+storage.getColums();
+        return position;
+    }
+
+
+    @Override
+    public void interact(GameObject gameObject,int button) {
+
+    }
+
+    @Override
+    public void interact(GameObject gameObject,int button, int xPosObjekt, int yPosObjekt, int xMouse, int yMouse) {
+
+        int xrelativeMousePosition =xMouse-xPosObjekt;
+        int yrelativeMousePosition =yMouse-yPosObjekt;
+        if (gameObject instanceof Storage) {
+            getMousePos((Storage) gameObject, xrelativeMousePosition, yrelativeMousePosition);
+        }
+        System.out.println("Not a storage");
     }
 
 }
