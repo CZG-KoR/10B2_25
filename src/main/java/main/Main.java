@@ -5,9 +5,12 @@
 
 package main;
 
-
+/**
+ * Main Methode zum Starten des Programms (bitte nicht anfassen ohne zu fragen!!!!)
+ */
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Hello Remote World!");
+        System.out.println("Programm Start");
+        GameWindow.openWindow();
     }
 }

@@ -1,7 +1,7 @@
 
 package gamelogic;
 
-import items.Item;
+import gameObject.items.Item;
 
 
 public class PC {
@@ -15,7 +15,12 @@ public class PC {
         return items[pos];
     }
     
-    public void addItem(Item imtem) {
+    public void addItem(Item item) {
+        for (int i = 0; i < items.length; i++) {
+            if (items[i]==null){
+                items[i]=item;
+            }
+        }
     }
      
 }
