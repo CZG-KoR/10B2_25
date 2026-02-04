@@ -17,7 +17,7 @@ import java.awt.event.ActionListener;
  * Game Pannel in welchem das Spiel Läuft
  */
 public class GamePanel extends JPanel implements Runnable {
-    GameObjects gameObjects; //liste aller gameObjekt im aktuellen gamePanel
+    GameObjects allGameObjects; //liste aller gameObjekt im aktuellen gamePanel
     /**
      * Das Feld wird in Tiles unterteilt um Sicherzustellen,
      * dass die Gesammtauflösung ein Vielfaches der Tilezise ist und somit das tilen von Objkten der Standart Auflösung möglich ist
@@ -49,8 +49,8 @@ public class GamePanel extends JPanel implements Runnable {
     @Override
     public void run() {
 
-        gameObjects =new GameObjects();//Legt die GameObjekt Liste an
-        gameObjects = MapBuilder.buildMap(gameObjects); //Baut die Map (Initialisiert die GameObjekt Liste)
+        allGameObjects =new GameObjects();//Legt die GameObjekt Liste an
+        allGameObjects = MapBuilder.buildMap(allGameObjects); //Baut die Map (Initialisiert die GameObjekt Liste)
 
         /**
          * Game Loop (Update -> repaint -> Pause)
@@ -58,7 +58,7 @@ public class GamePanel extends JPanel implements Runnable {
         Timer t = new Timer(delay, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent actionEvent) {
-                gameObjects=GameLogic.update(gameObjects,actionEvent);
+                allGameObjects =GameLogic.update(allGameObjects,actionEvent);
                 repaint();
             }
         });
@@ -77,8 +77,8 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D g2d= (Graphics2D) g;
 
-        for (int i = 0; i < gameObjects.getGameObjects().size(); i++) {
-           GameObject aktuellesGameobjekt= gameObjects.getGameObjects().get(i);
+        for (int i = 0; i < allGameObjects.getGameObjects().size(); i++) {
+           GameObject aktuellesGameobjekt= allGameObjects.getGameObjects().get(i);
            if (aktuellesGameobjekt.isVisible()){
             g2d.drawImage(aktuellesGameobjekt.getImg(),aktuellesGameobjekt.getPositionX(),aktuellesGameobjekt.getPositionY(),null);
            }
@@ -88,6 +88,6 @@ public class GamePanel extends JPanel implements Runnable {
     }
 
     public GameObjects getPanelGameObjects() {
-        return gameObjects;
+        return allGameObjects;
     }
 }

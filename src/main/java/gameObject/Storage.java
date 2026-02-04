@@ -1,7 +1,7 @@
 package gameObject;
 
 import gameObject.items.Item;
-
+import main.GamePanel;
 import java.awt.*;
 
 /**
@@ -14,6 +14,7 @@ public class Storage extends GameObject implements Interactable{
     int colums;//Spalten des Lagers
     int rows;//Zeilen des Lagers
 
+    String name;
     /**
      * Construktor für ein Lager
      * @param colums Spalten des Lagers
@@ -21,12 +22,13 @@ public class Storage extends GameObject implements Interactable{
      * @param positionX Position der oberen Linken Ecke des Lagers (x-Koordinate)
      * @param positionY Position der oberen Linken Ecke des Lagers (y-Koordinate)
      */
-    public Storage(Image img ,int layer,int positionX,int positionY,int colums,int rows){
+    public Storage(Image img ,String name,int layer,int positionX,int positionY,int colums,int rows){
         super(img,false,layer,positionX,positionY,colums*32,rows*32);
         int Zise = rows*colums;
         this.rows=rows;
         this.colums=colums;
         this.items=new Item[Zise];
+        this.name=name;
     }
 
     /**
@@ -145,6 +147,34 @@ public class Storage extends GameObject implements Interactable{
 
     }
 
+    /**
+     * Ein Stack Items wird, aus einem Source Lager in den ausgewählten Slot im Ziel-Lager verschoben.
+     * @param ziehlStorage Lager in welches die Items verschoben werden sollen
+     * @param  sourceStorage Lager aus dem die Items entnommen werden
+     * @param sourcePos Position des zu verschiebenden Items im Source lager
+     * @param ziehlPos Position in die Verschoben wird
+     */
+    public void addItems(Storage ziehlStorage, Storage sourceStorage, int sourcePos, int ziehlPos) {
+        if(ziehlStorage.items[ziehlPos]== sourceStorage.items[sourcePos]){
+            if (sourceStorage.amount[sourcePos]>0) {
+                ziehlStorage.amount[ziehlPos]=ziehlStorage.amount[ziehlPos]+sourceStorage.amount[sourcePos];
+                sourceStorage.amount[sourcePos]=0;
+            }
+            if (sourceStorage.amount[sourcePos]==0){
+                emtyPos(sourceStorage,sourcePos);}
+        }
+        if(ziehlStorage.items[ziehlPos]==null){
+            if (sourceStorage.amount[sourcePos]>0) {
+                ziehlStorage.items[ziehlPos]= sourceStorage.items[sourcePos];
+                ziehlStorage.amount[ziehlPos]=ziehlStorage.amount[ziehlPos]+sourceStorage.amount[sourcePos];
+                sourceStorage.amount[sourcePos]=0;
+            }
+            if (sourceStorage.amount[sourcePos]==0){
+                emtyPos(sourceStorage,sourcePos);}
+        }
+
+
+    }
 
     /**
      * private hilfsmethode zum leren eines lagerslots
@@ -156,28 +186,39 @@ public class Storage extends GameObject implements Interactable{
         storage.items[pos]=null;
     }
 
-    private int getMousePos(Storage storage,int xrelativeMousePosition, int yrelativeMousePosition){
+    private int getMousePos(int Colums,int xrelativeMousePosition, int yrelativeMousePosition){
         int activeRow=yrelativeMousePosition/32;
         int activeColum=xrelativeMousePosition/32;
-        int position=activeColum+activeRow+storage.getColums();
+        int position=activeColum+activeRow+Colums;
         return position;
     }
 
 
     @Override
-    public void interact(GameObject gameObject,int button) {
+    public void interact(int button) {
 
     }
 
     @Override
-    public void interact(GameObject gameObject,int button, int xPosObjekt, int yPosObjekt, int xMouse, int yMouse) {
-
+    public void interact(int button, int xPosObjekt, int yPosObjekt, int xMouse, int yMouse) {
+        int Colums = this.getColums();
         int xrelativeMousePosition =xMouse-xPosObjekt;
         int yrelativeMousePosition =yMouse-yPosObjekt;
-        if (gameObject instanceof Storage) {
-            getMousePos((Storage) gameObject, xrelativeMousePosition, yrelativeMousePosition);
-        }
-        System.out.println("Not a storage");
+            getMousePos(Colums, xrelativeMousePosition, yrelativeMousePosition);
+
+
+
+            //Linke Maustaste
+            if (button==1){
+
+
+            }
+            //Rechte maustaste
+            if (button==2){
+
+            }
+
+
     }
 
 }

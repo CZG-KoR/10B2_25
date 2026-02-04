@@ -2,7 +2,7 @@ package gameObject;
 
 import java.awt.*;
 
-public abstract class GameObject {
+public  abstract class GameObject {
 
     Image img;//Bild des GameObjektes
     boolean visible;//Sichtbarkeitsstatus

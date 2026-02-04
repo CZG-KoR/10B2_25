@@ -16,7 +16,18 @@ public class GameLogic extends MouseInput{
 
     public static GameObjects update(GameObjects gameObjects, ActionEvent actionEvent){
         System.out.println("started Updating");//Statusmeldung in der Konsole
-       if (mouseIsOnObjekt(gameObjects)!=null) System.out.println("in Objekt");
+
+        /*
+        * Interagieren mit ausgewählten GameObject
+        * */
+       GameObject selectedGemeObject =mouseIsOnObjekt(gameObjects);
+        if (selectedGemeObject!=null){
+            System.out.println("in Objekt");
+            if (selectedGemeObject instanceof Storage) {
+                ((Storage) selectedGemeObject).interact(MouseInput.button, selectedGemeObject.getPositionX(),selectedGemeObject.getPositionY(),MouseInput.mouseX,MouseInput.mouseY);
+            }
+
+        }
 
 
 
