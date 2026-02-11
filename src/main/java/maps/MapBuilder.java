@@ -45,16 +45,17 @@ public  class MapBuilder {
         mouseStorage.interactable=false;
         gameObjects.addGameObjekt(mouseStorage);
 
-        Storage playerInventory = new Storage(ImageLoader.loadImage("TempSprite.png"),"playerInventory",9,0,0,2,2);
+        Storage playerInventory = new Storage(ImageLoader.loadImage("TempSprite.png"),"playerInventory",9,64,0,2,2);
         playerInventory.setVisible(true);
         Item testItem =new Drug(DrugColection.getCocain());
         gameObjects.addGameObjekt(testItem);
         playerInventory.setItem(testItem,0);
-        //playerInventory.updateItems();
+        playerInventory.setAmount(0,1);
+        playerInventory.updateItems(gameObjects);
         gameObjects.addGameObjekt(playerInventory);
 
         Storage mainstorage =new Storage(ImageLoader.loadImage("TempSprite.png"),"mainstorage",9,22*32,22*32,1,1);
-        mainstorage.setVisible(false);
+        mainstorage.setVisible(true);
 
         gameObjects.addGameObjekt(mainstorage);
 

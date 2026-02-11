@@ -1,8 +1,7 @@
 package gameObject;
 
 import gameObject.items.Item;
-import gamelogic.GameLogic;
-import main.*;
+
 import java.awt.*;
 
 
@@ -69,8 +68,8 @@ public class Storage extends GameObject implements Interactable{
      * @param pos betroffene Position
      * @param amount neue Menge
      */
-    public void setAmount(Storage storage, int pos, int amount) {
-        storage.amount[pos]=amount;
+    public void setAmount( int pos, int amount) {
+        this.amount[pos]=amount;
     }
 
     /**
@@ -121,8 +120,6 @@ public class Storage extends GameObject implements Interactable{
             if (targetStorage.items[i] == sourceStorage.items[pos]) {
                 targetStorage.amount[i] = targetStorage.amount[i]+ sourceStorage.amount[pos];
                 emtyPos(sourceStorage,pos);
-                sourceStorage.updateItems();
-                targetStorage.updateItems();
                 gameObjects= sourceStorage.updateStorage(gameObjects);
                 gameObjects= sourceStorage.updateStorage(gameObjects);
 
@@ -134,8 +131,6 @@ public class Storage extends GameObject implements Interactable{
                 targetStorage.items[i]= sourceStorage.items[pos];
                 targetStorage.amount[i] = sourceStorage.amount[pos];
                 emtyPos(sourceStorage,pos);
-                sourceStorage.updateItems();
-                targetStorage.updateItems();
                 gameObjects= sourceStorage.updateStorage(gameObjects);
                 gameObjects= sourceStorage.updateStorage(gameObjects);
 
@@ -288,7 +283,7 @@ public class Storage extends GameObject implements Interactable{
 
     private GameObjects updateStorage(GameObjects gameObjects) {
         Storage aktiveStorage =this;
-        aktiveStorage.updateItems();
+        gameObjects =aktiveStorage.updateItems(gameObjects);
         for (int i = 0; i <gameObjects.getGameObjects().size(); i++) {
             if(gameObjects.getGameObjects().get(i) instanceof Storage){
                 if (((Storage) gameObjects.getGameObjects().get(i)).name ==aktiveStorage.name){
@@ -299,7 +294,7 @@ public class Storage extends GameObject implements Interactable{
         return gameObjects;
     }
 
-    private Point getItemCoordinates(int pos){
+    private Point getLocalItemCoordinates(int pos){
         int tileZise=32;
         int colums = this.getColums();
         int row = pos/colums;
@@ -309,17 +304,29 @@ public class Storage extends GameObject implements Interactable{
         Point point = new Point(posX,posY);
         return point;
     }
-    public void updateItems(){
+    public GameObjects updateItems(GameObjects gameObjects){
+        Storage storage =this;
         for (int i = 0; i < getItems().length; i++) {
             if (items[i]!=null){
-            Point itemCoordinates =getItemCoordinates(i);
-            items[i].setPositionX(itemCoordinates.x);
-            items[i].setPositionY(itemCoordinates.y);
+                int gameObjectIndex=0;
+                for (int j = 0; j <gameObjects.getGameObjects().size(); j++) {
+                    if (gameObjects.getGameObjects().get(j)==items[i]){
+                        gameObjectIndex=j;
+                        j=gameObjects.getGameObjects().size()-1;
+                    }
+                }
+            Point localItemCoordinates =getLocalItemCoordinates(i);
+            int absoluteItemPositionX = localItemCoordinates.x+storage.getPositionX();
+                int absoluteItemPositionY = localItemCoordinates.y+storage.getPositionY();
+            items[i].setPositionX(absoluteItemPositionX);
+            items[i].setPositionY(absoluteItemPositionY);
             items[i].setLayer(this.getLayer()+1);
             items[i].setVisible(this.isVisible());
+                gameObjects.setGameObjekt(items[i],gameObjectIndex);
             }
-        }
 
+        }
+        return gameObjects;
     }
 
 

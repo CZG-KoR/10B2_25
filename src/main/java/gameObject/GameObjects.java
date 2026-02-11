@@ -46,6 +46,12 @@ public class GameObjects  {
         }
     }
 
+    public void setGameObjekt(GameObject gameObject,int pos){
+        if (this.gameObjects.size()>pos){
+            this.gameObjects.set(pos,gameObject);
+        }
+    }
+
 
 
 }
