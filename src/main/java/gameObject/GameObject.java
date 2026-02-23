@@ -14,8 +14,8 @@ public  abstract class GameObject {
 
     public boolean interactable;//Interagierbarkeitsstatus
     //Größe der "Hitbox" des Objektes
-    public int sizeX;
-    public int sizeY;
+    public int ziseX;
+    public int ziseY;
 
     /**
      * Constructor für ein GameObjekt mit dem nicht interagiert werden kann
@@ -31,8 +31,8 @@ public  abstract class GameObject {
      this.layer=layer;
      this.positionX =positionX;
      this.positionY=positionY;
-     this.sizeX=0;
-     this.sizeY =0;
+     this.ziseX =0;
+     this.ziseY =0;
      this.interactable=false;
     }
 
@@ -52,8 +52,8 @@ public  abstract class GameObject {
         this.layer=layer;
         this.positionX =positionX;
         this.positionY=positionY;
-        this.sizeX=sizeX;
-        this.sizeY =sizeY;
+        this.ziseX =sizeX;
+        this.ziseY =sizeY;
         this.interactable=true;
     }
 
@@ -89,16 +89,21 @@ public  abstract class GameObject {
         this.positionY = positionY;
     }
 
+    public void setPosition(Point position) {
+       this.positionX=position.x;
+       this.positionY=position.y;
+    }
+
     public boolean isInteractable() {
         return interactable;
     }
 
-    public int getSizeX() {
-        return sizeX;
+    public int getZiseX() {
+        return ziseX;
     }
 
-    public int getSizeY() {
-        return sizeY;
+    public int getZiseY() {
+        return ziseY;
     }
 
     public int getLayer() {

@@ -16,6 +16,8 @@ public class Storage extends GameObject implements Interactable{
     int rows;//Zeilen des Lagers
 
     String name;
+
+
     /**
      * Construktor für ein Lager
      * @param colums Spalten des Lagers
@@ -64,7 +66,6 @@ public class Storage extends GameObject implements Interactable{
 
     /**
      * Menge eines Items in einer bestimmten poition eines bestimmten Lagers setzen
-     * @param storage Lager welches betroffen ist
      * @param pos betroffene Position
      * @param amount neue Menge
      */
@@ -106,6 +107,8 @@ public class Storage extends GameObject implements Interactable{
     public void setRows(int rows) {
         this.rows = rows;
     }
+
+
 
     /**
      * Items werden aus einem Source Lager in den ersten Slot eines Zieh-lagers verschoben, in welchem dieses bereits vorhanden ist,
@@ -234,7 +237,7 @@ public class Storage extends GameObject implements Interactable{
                 gameObjects=addItems(gameObjects,mouseStorage,this,0,mousePos);
             }
             //Rechte maustaste
-            if (button==2){
+            if (button==3){
                 gameObjects=addOneItem(gameObjects,mouseStorage,this,0,mousePos);
             }
         }else{
@@ -244,7 +247,7 @@ public class Storage extends GameObject implements Interactable{
                 gameObjects=addItems(gameObjects,this,mouseStorage,mousePos,0);
             }
             //Rechte maustaste
-            if (button==2){
+            if (button==3){
                 gameObjects=addOneItem(gameObjects,this,mouseStorage,mousePos,0);
             }
         }
@@ -270,7 +273,7 @@ public class Storage extends GameObject implements Interactable{
         return position;
     }
 
-    private Storage getMouseStorage(GameObjects gameObjects){
+    public  static Storage getMouseStorage(GameObjects gameObjects){
         for (int i = 0; i <gameObjects.getGameObjects().size(); i++) {
             if(gameObjects.getGameObjects().get(i) instanceof Storage){
                 if (((Storage) gameObjects.getGameObjects().get(i)).name =="mouseStorage"){
@@ -281,7 +284,11 @@ public class Storage extends GameObject implements Interactable{
         return null;
     }
 
-    private GameObjects updateStorage(GameObjects gameObjects) {
+
+
+
+
+    public  GameObjects updateStorage(GameObjects gameObjects) {
         Storage aktiveStorage =this;
         gameObjects =aktiveStorage.updateItems(gameObjects);
         for (int i = 0; i <gameObjects.getGameObjects().size(); i++) {

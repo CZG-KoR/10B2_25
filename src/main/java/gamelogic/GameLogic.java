@@ -2,7 +2,6 @@ package gamelogic;
 
 import gameObject.*;
 import helper.Sorter;
-import main.GamePanel;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -27,6 +26,7 @@ public class GameLogic extends MouseInput{
             }
 
         }
+        gameObjects=moveMouse(gameObjects);
 
 
 
@@ -46,7 +46,7 @@ public class GameLogic extends MouseInput{
      * @param gameObjects Liste der zu prüfenden Game Objekte
      * @return
      */
-    public  static GameObject mouseIsOnObjekt(GameObjects gameObjects){
+    private  static GameObject mouseIsOnObjekt(GameObjects gameObjects){
 
         if (MouseInput.mouseClicked){
             MouseInput.setMouseClicked(false);
@@ -61,8 +61,8 @@ public class GameLogic extends MouseInput{
                 if (gameObjectI.isInteractable()){
                     if (gameObjectI.getPositionX()<mouseX){
                         if (gameObjectI.getPositionY()<mouseY){
-                            if (gameObjectI.getPositionX()+gameObjectI.getSizeX()>mouseX){
-                                if (gameObjectI.getPositionY()+gameObjectI.getSizeY()>mouseY){
+                            if (gameObjectI.getPositionX()+gameObjectI.getZiseX()>mouseX){
+                                if (gameObjectI.getPositionY()+gameObjectI.getZiseY()>mouseY){
 
                                     return gameObjectI;
                                 }
@@ -78,6 +78,21 @@ public class GameLogic extends MouseInput{
     }
         return  null;
     }
+
+    public  static GameObjects moveMouse(GameObjects gameObjects){
+        if (MouseInput.mouseMoved) {
+            System.out.println("Moved");
+            MouseInput.setMouseMoved(false);
+            Point point = new Point(MouseInput.mouseX,MouseInput.mouseY);
+         Storage mouseStorage =Storage.getMouseStorage(gameObjects);
+         mouseStorage.setPosition(point);
+       gameObjects=  mouseStorage.updateStorage(gameObjects);
+       }
+    return  gameObjects;
+    }
+
+
+
 
 
 

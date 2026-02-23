@@ -41,6 +41,7 @@ public class GamePanel extends JPanel implements Runnable {
         this.setBackground(Color.darkGray);
         this.setDoubleBuffered(true);
         this.addMouseListener(new MouseInput());
+        this.addMouseMotionListener(new MouseInput());
     }
 
     /**
@@ -60,6 +61,7 @@ public class GamePanel extends JPanel implements Runnable {
             public void actionPerformed(ActionEvent actionEvent) {
                 allGameObjects =GameLogic.update(allGameObjects,actionEvent);
                 repaint();
+                MouseInfo.getPointerInfo().getLocation();
             }
         });
         t.start();
