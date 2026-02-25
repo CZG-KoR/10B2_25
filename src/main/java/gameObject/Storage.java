@@ -316,12 +316,15 @@ public class Storage extends GameObject implements Interactable{
         for (int i = 0; i < getItems().length; i++) {
             if (items[i]!=null){
                 int gameObjectIndex=0;
+
                 for (int j = 0; j <gameObjects.getGameObjects().size(); j++) {
                     if (gameObjects.getGameObjects().get(j)==items[i]){
+
                         gameObjectIndex=j;
                         j=gameObjects.getGameObjects().size()-1;
                     }
                 }
+
             Point localItemCoordinates =getLocalItemCoordinates(i);
             int absoluteItemPositionX = localItemCoordinates.x+storage.getPositionX();
                 int absoluteItemPositionY = localItemCoordinates.y+storage.getPositionY();
@@ -329,12 +332,22 @@ public class Storage extends GameObject implements Interactable{
             items[i].setPositionY(absoluteItemPositionY);
             items[i].setLayer(this.getLayer()+1);
             items[i].setVisible(this.isVisible());
+            items[i].setTextToDisplay(this.amount[i]+"");
                 gameObjects.setGameObjekt(items[i],gameObjectIndex);
-            }
 
-        }
+
+
+
+
+
+
+
+        }}
         return gameObjects;
     }
+
+
+
 
 
 }

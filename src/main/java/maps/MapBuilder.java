@@ -27,7 +27,7 @@ public  class MapBuilder {
     private static GameObjects buildBackgrounds(){
         GameObjects gameObjects=new GameObjects();
         
-        Background tempBackground =new Background( ImageLoader.loadImage("TempHintergrund.png"));
+        Background tempBackground =new Background( ImageLoader.loadImage("Räume/","Wohnzimmer.png"));
         gameObjects.addGameObjekt(tempBackground);
 
         return gameObjects;
@@ -45,12 +45,12 @@ public  class MapBuilder {
         mouseStorage.interactable=false;
         gameObjects.addGameObjekt(mouseStorage);
 
-        Storage playerInventory = new Storage(ImageLoader.loadImage("TempSprite.png"),"playerInventory",9,64,0,2,2);
+        Storage playerInventory = new Storage(ImageLoader.loadImage("InvSlot.png"),"playerInventory",9,64,0,2,2);
         playerInventory.setVisible(true);
         Item testItem =new Drug(DrugColection.getCocain());
         gameObjects.addGameObjekt(testItem);
         playerInventory.setItem(testItem,0);
-        playerInventory.setAmount(0,1);
+        playerInventory.setAmount(0,2);
         playerInventory.updateItems(gameObjects);
         gameObjects.addGameObjekt(playerInventory);
 

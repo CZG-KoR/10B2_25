@@ -17,6 +17,8 @@ public  abstract class GameObject {
     public int ziseX;
     public int ziseY;
 
+    String textToDisplay;
+
     /**
      * Constructor für ein GameObjekt mit dem nicht interagiert werden kann
      * @param img
@@ -34,6 +36,7 @@ public  abstract class GameObject {
      this.ziseX =0;
      this.ziseY =0;
      this.interactable=false;
+     this.textToDisplay ="";
     }
 
     /**
@@ -83,6 +86,18 @@ public  abstract class GameObject {
 
     public int getPositionY() {
         return positionY;
+    }
+
+    public void setInteractable(boolean interactable) {
+        this.interactable = interactable;
+    }
+
+    public String getTextToDisplay() {
+        return textToDisplay;
+    }
+
+    public void setTextToDisplay(String textToDisplay) {
+        this.textToDisplay = textToDisplay;
     }
 
     public void setPositionY(int positionY) {

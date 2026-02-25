@@ -12,7 +12,13 @@ public  class DrugColection{
     Drug LemonHaze= new Drug("Lemon Haze",12,ImageLoader.loadImage("TempItem.png"));
     Drug OGKush =new Drug("OG Kush",10,ImageLoader.loadImage("TempItem.png"));
 
+     static Drug Maka = new Drug("Maka",10,ImageLoader.loadImage("Drogen/Maka/"+"Maka.png"));
+
     public static Drug getCocain() {
         return Cocain;
+    }
+
+    public static Drug getMaka() {
+        return Maka;
     }
 }
