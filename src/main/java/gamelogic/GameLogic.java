@@ -1,6 +1,7 @@
 package gamelogic;
 
 import gameObject.*;
+import gameObject.Button;
 import gameObject.Menu;
 import helper.Sorter;
 
@@ -21,11 +22,14 @@ public class GameLogic extends MouseInput{
         * */
        GameObject selectedGameObject =mouseIsOnObjekt(gameObjects);
         if (selectedGameObject!=null){
-           System.out.println("in Objekt");
-            if (selectedGameObject instanceof Storage) {
-               gameObjects= ((Storage) selectedGameObject).interact(gameObjects,MouseInput.button, selectedGameObject.getPositionX(),selectedGameObject.getPositionY(),MouseInput.mouseX,MouseInput.mouseY);
-            }
 
+           if (MouseInput.mouseClicked) {
+               System.out.println("in Objekt");
+               if (selectedGameObject instanceof Storage) {
+                   gameObjects = ((Storage) selectedGameObject).interact(gameObjects, MouseInput.button, selectedGameObject.getPositionX(), selectedGameObject.getPositionY(), MouseInput.mouseX, MouseInput.mouseY);
+               }
+               MouseInput.setMouseClicked(false);
+           }
         }
         gameObjects=moveMouse(gameObjects);
 
@@ -50,15 +54,13 @@ public class GameLogic extends MouseInput{
      * @return
      */
     private  static GameObject mouseIsOnObjekt(GameObjects gameObjects){
-        if (MouseInput.mouseClicked){
-            MouseInput.setMouseClicked(false);
 
         int mouseX =MouseInput.mouseX;
         int mouseY =MouseInput.mouseY;
+        int size = gameObjects.getGameObjects().size();
+        for (int i = 1; i <=size; i++) {
 
-        for (int i = 0; i <gameObjects.getGameObjects().size(); i++) {
-
-            GameObject gameObjectI =gameObjects.getGameObjects().get(i);
+            GameObject gameObjectI =gameObjects.getGameObjects().get(size-i);
             if (gameObjectI.isVisible()){
                 if (gameObjectI.isInteractable()){
                     if (gameObjectI.getPositionX()<mouseX){
@@ -77,7 +79,7 @@ public class GameLogic extends MouseInput{
         }
 
 
-    }
+
         return  null;
     }
 
@@ -88,22 +90,48 @@ public class GameLogic extends MouseInput{
             Point point = new Point(MouseInput.mouseX,MouseInput.mouseY);
          Storage mouseStorage =Storage.getMouseStorage(gameObjects);
          mouseStorage.setPosition(point);
-       gameObjects=  mouseStorage.updateStorage(gameObjects);
+         gameObjects=  mouseStorage.updateStorage(gameObjects);
 
-       }
-       if (MouseInput.mouseDraged){
-           System.out.println("Draged");
-           MouseInput.setMouseDraged(false);
-           GameObject newGameObject =mouseIsOnObjekt(gameObjects);
 
-           if (newGameObject!=null){
-               if (newGameObject.isDragable()){gameObjects.removeGameObject(newGameObject);
-               Point point = new Point(MouseInput.mouseX,MouseInput.mouseY);
-               newGameObject.setPosition(point);
-               gameObjects.addGameObject(newGameObject);
-               }
+            boolean draging=false;
+            for (int i = 0; i <gameObjects.getGameObjects().size(); i++) {
+                if (gameObjects.getGameObjects().get(i)!=null){
+                    if (gameObjects.getGameObjects().get(i).isLockedToMouse()&& MouseInput.mousepressed){
+                        if (gameObjects.getGameObjects().get(i) instanceof Menu){
+                            Point absolutePosition =new Point(
+                                    (int) (point.getX()-((Menu) gameObjects.getGameObjects().get(i)).getLocalMousePosition().getX()),
+                                    (int) (point.getY()- ((Menu) gameObjects.getGameObjects().get(i)).getLocalMousePosition().getY())
+                            );
+                            gameObjects.getGameObjects().get(i).setPosition(absolutePosition);
+                        }else {
+                        gameObjects.getGameObjects().get(i).setPosition(point);
+                        }
+                        gameObjects.updateGameObject(gameObjects.getGameObjects().get(i));
+                        draging=true;
+                    }else if (gameObjects.getGameObjects().get(i).isLockedToMouse()&& !MouseInput.mousepressed){
+                        gameObjects.getGameObjects().get(i).setLockedToMouse(false);
+                        gameObjects.getGameObjects().get(i).setInteractable(true);
+                        gameObjects.updateGameObject(gameObjects.getGameObjects().get(i));
 
-           }
+                    }
+                }
+            }
+            if (MouseInput.mousepressed&& !draging){
+                GameObject onObjekt =mouseIsOnObjekt(gameObjects);
+                if (onObjekt!=null){
+                    if (onObjekt.isDragable()){
+                        onObjekt.setLockedToMouse(true);
+                        onObjekt.setInteractable(false);
+                        if (onObjekt instanceof Menu){
+                            ((Menu) onObjekt).setLocalMousePosition(((Menu) onObjekt).calculateLocalMousePosition(point));
+                        }
+                        gameObjects.updateGameObject(onObjekt);
+                    }}
+
+            }
+
+
+
        }
     return  gameObjects;
     }
@@ -111,8 +139,10 @@ public class GameLogic extends MouseInput{
 
     public   static GameObjects updateChildObjekts(GameObjects gameObjects) {
         for (int i = 0; i < gameObjects.getGameObjects().size(); i++) {
+            if (gameObjects.getGameObjects().get(i)!=null) {
             if (gameObjects.getGameObjects().get(i).isChildObject()) {
                 gameObjects.setGameObject(null, i);
+            }
             }
         }
 
@@ -122,11 +152,11 @@ public class GameLogic extends MouseInput{
 
 
             if (aktiveGameObject instanceof Storage) {
-                updateStorage(gameObjects,aktiveGameObject);
+               gameObjects= updateStorage(gameObjects,aktiveGameObject);
             }
 
             if (aktiveGameObject instanceof Menu){
-                updateMenu(gameObjects,aktiveGameObject);
+                gameObjects=updateMenu(gameObjects,aktiveGameObject);
             }
         }
 
@@ -158,9 +188,6 @@ public class GameLogic extends MouseInput{
         GameObjects aktiveMenuGameObjects = aktiveMenu.getMenuGameObjects();
         for (int j = 0; j <aktiveMenuGameObjects.getGameObjects().size(); j++) {
             GameObject aktiveChildGameObject = aktiveMenuGameObjects.getGameObjects().get(j);
-            if (aktiveChildGameObject instanceof Storage) {
-                updateStorage(gameObjects,aktiveGameObject);
-            }
             int absoluteChildObjectPositionX =aktiveMenu.getPositionX()+aktiveChildGameObject.getPositionX();
             int absoluteChildObjectPositionY =aktiveMenu.getPositionY()+aktiveChildGameObject.getPositionY();
             int absoluteChildObjectLayer= aktiveMenu.getLayer()+aktiveChildGameObject.getLayer();
@@ -170,13 +197,38 @@ public class GameLogic extends MouseInput{
                     absoluteChildObjectVisibility=true;
                 }
             }
-            GameObject globalChildGameObject= aktiveChildGameObject;
+            GameObject globalChildGameObject = null;
+            if (aktiveChildGameObject!= null){
+            Image img =aktiveChildGameObject.getImg();
+            if (aktiveChildGameObject instanceof Background){
+                globalChildGameObject= new Background(img);
+            }
+            if (aktiveChildGameObject instanceof Button){
+                globalChildGameObject =new Button(img,false,0,0,0,0,0,false);
+            }
+            if (aktiveChildGameObject instanceof Storage){
+                globalChildGameObject =new Storage(img,((Storage) aktiveChildGameObject).getName(),1,0,0,((Storage) aktiveChildGameObject).getColums(),((Storage) aktiveChildGameObject).getRows());
+                ((Storage) globalChildGameObject).setItems(((Storage) aktiveChildGameObject).getItems());
+                ((Storage) globalChildGameObject).setAmounts(((Storage) aktiveChildGameObject).getAmounts());
+            }
+            if (aktiveChildGameObject instanceof TempObject){
+                globalChildGameObject = new TempObject(false,0,0,0);
+            }}
+
+
+
+            if (globalChildGameObject != null){
             globalChildGameObject.setPositionX(absoluteChildObjectPositionX);
             globalChildGameObject.setPositionY(absoluteChildObjectPositionY);
             globalChildGameObject.setLayer(absoluteChildObjectLayer);
             globalChildGameObject.setVisible(absoluteChildObjectVisibility);
             globalChildGameObject.setChildObject(true);
             gameObjects.addGameObject(globalChildGameObject);
+                if (globalChildGameObject instanceof Storage){
+                    gameObjects=((Storage) globalChildGameObject).updateStorage(gameObjects);
+                    gameObjects=updateStorage(gameObjects,globalChildGameObject);
+                }
+            }
         }
         return gameObjects;
     }

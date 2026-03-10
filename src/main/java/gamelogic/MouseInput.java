@@ -1,7 +1,6 @@
 
 package gamelogic;
 
-import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
@@ -13,7 +12,7 @@ public class MouseInput extends MouseAdapter {
     public static int mouseY;
   public static boolean mouseClicked;
   public static  boolean mouseMoved;
-  public static boolean mouseDraged;
+  public static boolean mousepressed;
 @Override
     public void mouseClicked(MouseEvent e){
    button= e.getButton();
@@ -31,9 +30,17 @@ public void mouseMoved(MouseEvent e){
 @Override
 public void mouseDragged(MouseEvent e){
     mouseMoved=true;
-    mouseDraged=true;
     mouseX=e.getX();
     mouseY=e.getY();
+}
+@Override
+public void mousePressed(MouseEvent e){
+    mousepressed =true;
+}
+@Override
+public void mouseReleased(MouseEvent e){
+    mousepressed =false;
+
 }
 
     public static void setMouseClicked(boolean mouseClicked) {
@@ -44,7 +51,4 @@ public void mouseDragged(MouseEvent e){
         MouseInput.mouseMoved = mouseMoved;
     }
 
-    public static void setMouseDraged(boolean mouseDraged) {
-        MouseInput.mouseDraged = mouseDraged;
-    }
 }

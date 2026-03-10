@@ -15,13 +15,14 @@ public  abstract class GameObject {
 
     public boolean interactable;//Interagierbarkeitsstatus
     public boolean dragable;
+    public boolean lockedToMouse;
     //Größe der "Hitbox" des Objektes
     public int ziseX;
     public int ziseY;
 
     boolean childObject;
 
-
+    String uniqueId;
 
     /**
      * Constructor für ein GameObjekt mit dem nicht interagiert werden kann
@@ -43,6 +44,7 @@ public  abstract class GameObject {
      this.textToDisplay ="";
      this.childObject =false;
      this.dragable=false;
+     this.uniqueId="Time Created" +System.nanoTime();
     }
 
     /**
@@ -67,7 +69,9 @@ public  abstract class GameObject {
         this.textToDisplay="";
         this.childObject =false;
         this.dragable=false;
+        this.uniqueId="Time Created" +System.nanoTime();
     }
+
 
     public Image getImg() {
         return img;
@@ -160,5 +164,13 @@ public  abstract class GameObject {
 
     public void setDragable(boolean dragable) {
         this.dragable = dragable;
+    }
+
+    public boolean isLockedToMouse() {
+        return lockedToMouse;
+    }
+
+    public void setLockedToMouse(boolean lockedToMouse) {
+        this.lockedToMouse = lockedToMouse;
     }
 }

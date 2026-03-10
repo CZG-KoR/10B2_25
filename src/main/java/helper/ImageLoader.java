@@ -39,11 +39,11 @@ public class ImageLoader {
      * @param filename name des zu ladenden Bildes (mit Dateiendung) Bsp: "Beispeil.png"
      * @return Geladenes Bild
      */
-    public static Image loadImage(String filename,int saclingFaktor){
+    public static Image loadImage(String filename,int scalingFaktor){
         Image image = new ImageIcon("resources/"+filename).getImage();
         int h =image.getHeight(null);
         int w= image.getWidth(null);
-       Image scaledImg = image.getScaledInstance(w*saclingFaktor,h*saclingFaktor,Image.SCALE_DEFAULT);
+       Image scaledImg = image.getScaledInstance(w*scalingFaktor,h*scalingFaktor,Image.SCALE_DEFAULT);
         return scaledImg;
     }
 
@@ -54,13 +54,43 @@ public class ImageLoader {
      * @param filename  name des zu ladenden Bildes (mit Dateiendung) Bsp: "Beispeil.png"
      * @return Geldenes Bild
      */
-    public static Image loadImage(String path, String filename,int saclingFaktor){
+    public static Image loadImage(String path, String filename,int scalingFaktor){
         Image image = new ImageIcon("resources/"+path+filename).getImage();
         int h =image.getHeight(null);
         int w= image.getWidth(null);
-        Image scaledImg = image.getScaledInstance(w*saclingFaktor,h*saclingFaktor,Image.SCALE_DEFAULT);
+        Image scaledImg = image.getScaledInstance(w* scalingFaktor,h* scalingFaktor,Image.SCALE_DEFAULT);
         return scaledImg;
     }
+
+    /**
+     * Standart-Methode zum Laden von Bildern aus dem resources Ordner
+     * @param filename name des zu ladenden Bildes (mit Dateiendung) Bsp: "Beispeil.png"
+     * @return Geladenes Bild
+     */
+    public static Image loadImage(String filename,int scalingFaktorX,int scalingFaktorY){
+        Image image = new ImageIcon("resources/"+filename).getImage();
+        int h =image.getHeight(null);
+        int w= image.getWidth(null);
+        Image scaledImg = image.getScaledInstance(w*scalingFaktorX,h*scalingFaktorY,Image.SCALE_DEFAULT);
+        return scaledImg;
+    }
+
+    /**
+     * methode zum Laden von Bildern aus dem resources Ordner welche sich in Unterordnern befinden
+     * @param path Pfad des Unterordners (nach einem Ordnernamen folgt ein /)
+     *             Beispiel zum Laden eines Bsp. Bildes im resources Ordner in einem Bsp. Ordner: "Bsp/"
+     * @param filename  name des zu ladenden Bildes (mit Dateiendung) Bsp: "Beispeil.png"
+     * @return Geldenes Bild
+     */
+    public static Image loadImage(String path, String filename,int scalingFaktorX,int scalingFaktorY){
+        Image image = new ImageIcon("resources/"+path+filename).getImage();
+        int h =image.getHeight(null);
+        int w= image.getWidth(null);
+        Image scaledImg = image.getScaledInstance(w* scalingFaktorX,h* scalingFaktorY,Image.SCALE_DEFAULT);
+        return scaledImg;
+    }
+
+
 
     public static Image loadTiledImage(String filename, int colums , int rows){
        Image tiledImage =loadImage(filename+"Tiled-"+colums+"x"+rows+".png");

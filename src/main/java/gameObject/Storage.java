@@ -3,7 +3,6 @@ package gameObject;
 import gameObject.items.Drug;
 import gameObject.items.Ingredient;
 import gameObject.items.Item;
-import gamelogic.GameLogic;
 
 import java.awt.*;
 
@@ -141,6 +140,13 @@ public class Storage extends GameObject implements Interactable {
         this.rows = rows;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public void setAmounts(int[] amount) {
+        this.amount = amount;
+    }
 
     /**
      * Items werden aus einem Source Lager in den ersten Slot eines Zieh-lagers verschoben, in welchem dieses bereits vorhanden ist,

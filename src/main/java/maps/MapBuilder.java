@@ -41,18 +41,12 @@ public  class MapBuilder {
     private static GameObjects buildStorges(){
         GameObjects gameObjects=new GameObjects();
 
-        Storage mouseStorage =new Storage(ImageLoader.loadImage("empty.png"),"mouseStorage",10,0,0,1,1);
+        Storage mouseStorage =new Storage(ImageLoader.loadImage("empty.png"),"mouseStorage",100,0,0,1,1);
         mouseStorage.setVisible(true);
         mouseStorage.interactable=false;
         gameObjects.addGameObject(mouseStorage);
 
-        Storage playerInventory = new Storage(ImageLoader.loadImage("InvSlot.png"),"playerInventory",9,64,0,10,5);
-        playerInventory.setImg(ImageLoader.loadTiledImage("InvSlot.png",playerInventory.getColums(),playerInventory.getRows()));
-        playerInventory.setVisible(true);
-        Item testItem =new Drug(DrugColection.getCocain());
-        playerInventory.setItem(testItem,0);
-        playerInventory.setAmount(0,3);
-        gameObjects.addGameObject(playerInventory);
+
 
 
 
@@ -74,7 +68,17 @@ public  class MapBuilder {
         TempObject temp2 = new TempObject(true,1,32,32);
         ChildGameObjects.addGameObject(temp2);
 
-        Menu menu =new Menu(ImageLoader.loadImage("emty.png"),true,10,10,256,100,100,ChildGameObjects);
+        Storage playerInventory = new Storage(ImageLoader.loadImage("InvSlot.png"),"playerInventory",9,0,32,10,5);
+        playerInventory.setImg(ImageLoader.loadTiledImage("InvSlot.png",playerInventory.getColums(),playerInventory.getRows()));
+        playerInventory.setVisible(true);
+        Item testItem =new Drug(DrugColection.getCocain());
+        playerInventory.setItem(testItem,0);
+        playerInventory.setAmount(0,3);
+        gameObjects.addGameObject(playerInventory);
+        ChildGameObjects.addGameObject(playerInventory);
+
+
+        Menu menu =new Menu(ImageLoader.loadImage("TempPixel.png",32*10,32),true,10,10,256,32*10,32,ChildGameObjects);
 
         gameObjects.addGameObject(menu);
         return gameObjects;

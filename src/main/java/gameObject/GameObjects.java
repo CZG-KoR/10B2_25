@@ -51,12 +51,13 @@ public class GameObjects  {
         }
     }
 
-    public void removeGameObject(GameObject gameObject){
+    public GameObjects updateGameObject(GameObject gameObject){
         for (int i = 0; i <this.gameObjects.size(); i++) {
-          if(  this.gameObjects.get(i) ==gameObject){
-              this.gameObjects.set(i,null);
+          if(  this.gameObjects.get(i).uniqueId==gameObject.uniqueId){
+              this.gameObjects.set(i,gameObject);
           }
         }
+        return this;
     }
 
 

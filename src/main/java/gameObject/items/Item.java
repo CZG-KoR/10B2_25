@@ -15,7 +15,7 @@ public abstract class Item extends GameObject {
 
 
     public Item(Image img ,String name, int basevalue, boolean craftable) {
-        super(img,false,0,0,0,32,32);
+        super(img,false,0,0,0);
         this.name = name;
         this.basevalue = basevalue;
         this.craftable = craftable;
@@ -25,7 +25,7 @@ public abstract class Item extends GameObject {
     }
 
     public Item(Item templateItem){
-        super(templateItem.getImg(),false,0,0,0,32,32);
+        super(templateItem.getImg(),false,0,0,0);
         this.name=templateItem.getName();
         this.basevalue=templateItem.getBasevalue();
         this.craftable=templateItem.craftable;
