@@ -75,7 +75,7 @@ public  class MainRoom implements MapBuilder{
         ChildGameObjects.addGameObject(playerInventory);
 
 
-        Menu menu =new Menu(ImageLoader.loadImage("TempPixel.png",32*10,32),true,10,10,256,32*10,32,ChildGameObjects);
+        Menu menu =new Menu(ImageLoader.loadImage("TempPixel.png",32*10,32),false,10,10,256,32*10,32,ChildGameObjects);
         VisibilityToggler visibilityToggler = new VisibilityToggler(ImageLoader.loadImage("exit.png"),true,1,9*32,0,32,32,true,menu);
         menu.addMenuGameObject(visibilityToggler);
         gameObjects.addGameObject(menu);
@@ -87,7 +87,7 @@ public  class MainRoom implements MapBuilder{
 
 
 
-        Menu storageMenu =new Menu(ImageLoader.loadImage("TempPixel.png",32*10,32),true,10,10,600,32*10,32,new GameObjects());
+        Menu storageMenu =new Menu(ImageLoader.loadImage("TempPixel.png",32*10,32),false,10,10,600,32*10,32,new GameObjects());
         VisibilityToggler visibilityTogglerMainStorage = new VisibilityToggler(ImageLoader.loadImage("exit.png"),true,1,9*32,0,32,32,true,storageMenu);
         storageMenu.addMenuGameObject(visibilityTogglerMainStorage);
 
