@@ -79,8 +79,7 @@ public  class MainRoom implements MapBuilder{
         VisibilityToggler visibilityToggler = new VisibilityToggler(ImageLoader.loadImage("exit.png"),true,1,9*32,0,32,32,true,menu);
         menu.addMenuGameObject(visibilityToggler);
         gameObjects.addGameObject(menu);
-        VisibilityToggler visibilityToggler2 = new VisibilityToggler(ImageLoader.loadImage("TempSprite.png"),true,10,0,0,32,32,false,menu);
-        gameObjects.addGameObject(visibilityToggler2);
+
 
 
 
@@ -97,7 +96,7 @@ public  class MainRoom implements MapBuilder{
         mainstorage.setVisible(true);
         storageMenu.addMenuGameObject(mainstorage);
         gameObjects.addGameObject(storageMenu);
-        VisibilityToggler visibilityTogglerMainStorage2 = new VisibilityToggler(ImageLoader.loadImage("Chest.png",0.04),true,10,100,0,64,64,false,storageMenu);
+        VisibilityToggler visibilityTogglerMainStorage2 = new VisibilityToggler(ImageLoader.loadImage("Chest.png",0.04),true,10,100,500,64,64,false,storageMenu);
         gameObjects.addGameObject(visibilityTogglerMainStorage2);
 
         return gameObjects;

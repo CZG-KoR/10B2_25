@@ -79,7 +79,7 @@ public class GamePanel extends JPanel implements Runnable {
 
         Graphics2D g2d= (Graphics2D) g;
 
-
+        if (allGameObjects!=null){
         for (int i = 0; i < allGameObjects.getGameObjects().size(); i++) {
            GameObject aktuellesGameobjekt= allGameObjects.getGameObjects().get(i);
            if (aktuellesGameobjekt.isVisible()){
@@ -96,7 +96,7 @@ public class GamePanel extends JPanel implements Runnable {
             }
 
            }
-        }
+        }}
 
        // System.out.println("finished Painting"); //Statusmeldung in der Konsole
     }

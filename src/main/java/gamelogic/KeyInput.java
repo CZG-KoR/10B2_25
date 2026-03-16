@@ -4,28 +4,29 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
 public class KeyInput extends KeyAdapter {
-        static String aktiveKey;
+        static char aktiveKey =' ';
 
         @Override
         public void keyTyped(KeyEvent keyEvent) {
-            aktiveKey =KeyEvent.getKeyText(keyEvent.getKeyCode());
-
-
+            if (keyEvent.getKeyCode()!=0) {
+                aktiveKey = keyEvent.getKeyChar();
+            }
     }
 
         @Override
         public void keyPressed(KeyEvent keyEvent) {
-            aktiveKey =KeyEvent.getKeyText(keyEvent.getKeyCode());
+            if (keyEvent.getKeyCode()!=0) {
+                aktiveKey = keyEvent.getKeyChar();
+            }
             System.out.println("Taste gewdrückt: " + KeyEvent.getKeyText(keyEvent.getKeyCode()));
     }
 
         @Override
         public void keyReleased(KeyEvent keyEvent) {
-            aktiveKey ="";
 
     }
 
-    public static String getAktiveKey() {
+    public static char getAktiveKey() {
         return aktiveKey;
     }
 }

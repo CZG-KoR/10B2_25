@@ -39,6 +39,19 @@ public class GameLogic extends MouseInput{
         }
         gameObjects=moveMouse(gameObjects);
 
+        char key =KeyInput.getAktiveKey();
+        if (key!=' '){
+            if (key=='e'){
+                gameObjects =openPayerInventory(gameObjects);
+                KeyInput.aktiveKey=' ';
+            }
+            if (key==27){
+                gameObjects =closeAllMenus(gameObjects);
+                KeyInput.aktiveKey=' ';
+            }
+
+        }
+
 
 
 
@@ -165,6 +178,38 @@ public class GameLogic extends MouseInput{
         }
         return gameObjects;
     }
+
+   public static GameObjects openPayerInventory(GameObjects gameObjects){
+       for (int i = 0; i <gameObjects.getGameObjects().size(); i++) {
+            GameObject aktiveGameObject =gameObjects.getGameObjects().get(i);
+            if (aktiveGameObject instanceof Menu){
+                if (((Menu) aktiveGameObject).getMenuGameObjects()!=null){
+                    for (int j = 0; j <((Menu) aktiveGameObject).getMenuGameObjects().getGameObjects().size(); j++) {
+                         GameObject childObject =((Menu) aktiveGameObject).getMenuGameObjects().getGameObjects().get(j);
+                         if (childObject instanceof Storage){
+                             if (((Storage) childObject).getName().equals("playerInventory")){
+                                 aktiveGameObject.setVisible(true);
+
+                             }
+                         }
+                    }
+                    gameObjects.updateGameObject(aktiveGameObject);
+                }
+            }
+       }
+        return gameObjects;
+   }
+
+   public static GameObjects closeAllMenus(GameObjects gameObjects){
+       for (int i = 0; i <gameObjects.getGameObjects().size(); i++) {
+           GameObject aktiveGameObject =gameObjects.getGameObjects().get(i);
+           if (aktiveGameObject instanceof Menu){
+              aktiveGameObject.setVisible(false);
+           }
+       }
+       return gameObjects;
+
+   }
 
 
 
