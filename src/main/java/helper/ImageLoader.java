@@ -39,11 +39,11 @@ public class ImageLoader {
      * @param filename name des zu ladenden Bildes (mit Dateiendung) Bsp: "Beispeil.png"
      * @return Geladenes Bild
      */
-    public static Image loadImage(String filename,int scalingFaktor){
+    public static Image loadImage(String filename,double scalingFaktor){
         Image image = new ImageIcon("resources/"+filename).getImage();
-        int h =image.getHeight(null);
-        int w= image.getWidth(null);
-       Image scaledImg = image.getScaledInstance(w*scalingFaktor,h*scalingFaktor,Image.SCALE_DEFAULT);
+        double h =image.getHeight(null);
+        double w= image.getWidth(null);
+       Image scaledImg = image.getScaledInstance((int) (w*scalingFaktor), (int) (h*scalingFaktor),Image.SCALE_DEFAULT);
         return scaledImg;
     }
 
@@ -54,13 +54,14 @@ public class ImageLoader {
      * @param filename  name des zu ladenden Bildes (mit Dateiendung) Bsp: "Beispeil.png"
      * @return Geldenes Bild
      */
-    public static Image loadImage(String path, String filename,int scalingFaktor){
+    public static Image loadImage(String path, String filename,double scalingFaktor){
         Image image = new ImageIcon("resources/"+path+filename).getImage();
-        int h =image.getHeight(null);
-        int w= image.getWidth(null);
-        Image scaledImg = image.getScaledInstance(w* scalingFaktor,h* scalingFaktor,Image.SCALE_DEFAULT);
+        double h =image.getHeight(null);
+        double w= image.getWidth(null);
+        Image scaledImg = image.getScaledInstance((int) (w* scalingFaktor), (int) (h* scalingFaktor),Image.SCALE_DEFAULT);
         return scaledImg;
     }
+
 
     /**
      * Standart-Methode zum Laden von Bildern aus dem resources Ordner

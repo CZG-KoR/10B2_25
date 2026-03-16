@@ -1,4 +1,6 @@
 package main;
+import helper.ImageLoader;
+
 import javax.swing.*;
 
 /**
@@ -11,6 +13,7 @@ public class GameWindow {
         window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         window.setResizable(false);
         window.setTitle("Pharmacy");
+        window.setIconImage(ImageLoader.loadImage("Logo.png"));
     GamePanel gamePanel;
     gamePanel =new GamePanel();
             window.add(gamePanel);

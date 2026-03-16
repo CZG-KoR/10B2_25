@@ -4,10 +4,10 @@ import gameObject.GameObjects;
 
 public interface MapBuilder {
     static GameObjects buildMap(GameObjects gameObjects){
-        gameObjects.addGameObjekts(buildBackgrounds());
-        gameObjects.addGameObjekts(buildDecoration());
-        gameObjects.addGameObjekts(buildStorges());
-        gameObjects.addGameObjekts(buildMenus());
+        gameObjects.addGameObjects(buildBackgrounds());
+        gameObjects.addGameObjects(buildDecoration());
+        gameObjects.addGameObjects(buildStorges());
+        gameObjects.addGameObjects(buildMenus());
         return gameObjects;
     };
      static GameObjects buildBackgrounds(){

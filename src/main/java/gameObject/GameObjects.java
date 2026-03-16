@@ -39,7 +39,7 @@ public class GameObjects  {
      * Methode zum Hinzufügen einer Liste an GameObjekten zu einer bereits bestehenden Liste
      * @param gameObjects   Liste der hinzuzufügenden game Objekte
      */
-    public void addGameObjekts(GameObjects gameObjects){
+    public void addGameObjects(GameObjects gameObjects){
         for (int i = 0; i < gameObjects.gameObjects.size(); i++) {
         this.gameObjects.add(gameObjects.gameObjects.get(i));
         }

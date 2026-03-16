@@ -5,6 +5,7 @@ import gameObject.items.Drug;
 import gameObject.items.DrugColection;
 import gameObject.items.Item;
 import helper.ImageLoader;
+import main.GameWindow;
 
 /**
  * Klasse zum Bauen (Initialisiern) der Karte
@@ -16,9 +17,11 @@ public  class MainRoom implements MapBuilder{
      * @return Liste aller Gameobjekte nach dem Buen (Initialisieren) der Karte
      */
     public static GameObjects buildMap(GameObjects gameObjects){
-       gameObjects.addGameObjekts(buildBackgrounds());
-        gameObjects.addGameObjekts(buildStorges());
-        gameObjects.addGameObjekts(buildMenus());
+       gameObjects.addGameObjects(buildBackgrounds());
+       gameObjects.addGameObjects(buildDecoration());
+       gameObjects.addGameObjects(buildButtons());
+        gameObjects.addGameObjects(buildStorges());
+        gameObjects.addGameObjects(buildMenus());
 
 
 
@@ -51,11 +54,7 @@ public  class MainRoom implements MapBuilder{
 
 
 
-        Storage mainstorage =new Storage(ImageLoader.loadImage("TempSprite.png"),"mainstorage",9,22*32,22*32,10,9);
-        mainstorage.setImg(ImageLoader.loadTiledImage("InvSlot.png",mainstorage.getColumns(),mainstorage.getRows()));
-        mainstorage.setVisible(true);
 
-        gameObjects.addGameObject(mainstorage);
 
         return gameObjects;
     }
@@ -77,11 +76,48 @@ public  class MainRoom implements MapBuilder{
 
 
         Menu menu =new Menu(ImageLoader.loadImage("TempPixel.png",32*10,32),true,10,10,256,32*10,32,ChildGameObjects);
-        VisibilityToggler visibilityToggler = new VisibilityToggler(ImageLoader.loadImage("TempSprite.png"),true,1,0,0,32,32,true,menu);
+        VisibilityToggler visibilityToggler = new VisibilityToggler(ImageLoader.loadImage("exit.png"),true,1,9*32,0,32,32,true,menu);
         menu.addMenuGameObject(visibilityToggler);
         gameObjects.addGameObject(menu);
         VisibilityToggler visibilityToggler2 = new VisibilityToggler(ImageLoader.loadImage("TempSprite.png"),true,10,0,0,32,32,false,menu);
         gameObjects.addGameObject(visibilityToggler2);
+
+
+
+
+
+
+
+        Menu storageMenu =new Menu(ImageLoader.loadImage("TempPixel.png",32*10,32),true,10,10,600,32*10,32,new GameObjects());
+        VisibilityToggler visibilityTogglerMainStorage = new VisibilityToggler(ImageLoader.loadImage("exit.png"),true,1,9*32,0,32,32,true,storageMenu);
+        storageMenu.addMenuGameObject(visibilityTogglerMainStorage);
+
+        Storage mainstorage =new Storage(ImageLoader.loadImage("TempSprite.png"),"mainstorage",1,0,32,10,9);
+        mainstorage.setImg(ImageLoader.loadTiledImage("InvSlot.png",mainstorage.getColumns(),mainstorage.getRows()));
+        mainstorage.setVisible(true);
+        storageMenu.addMenuGameObject(mainstorage);
+        gameObjects.addGameObject(storageMenu);
+        VisibilityToggler visibilityTogglerMainStorage2 = new VisibilityToggler(ImageLoader.loadImage("Chest.png",0.04),true,10,100,0,64,64,false,storageMenu);
+        gameObjects.addGameObject(visibilityTogglerMainStorage2);
+
+        return gameObjects;
+    }
+
+    static GameObjects buildDecoration(){
+        GameObjects gameObjects =new GameObjects();
+        TempObject tempObject=new TempObject(true,10,320,600);
+        tempObject.setImg(ImageLoader.loadImage("Tisch.png"));
+        gameObjects.addGameObject(tempObject);
+
+
+        TempObject tempObject1=new TempObject(true,10,420,226);
+        tempObject1.setImg(ImageLoader.loadImage("Tür.png"));
+        gameObjects.addGameObject(tempObject1);
+        return gameObjects;
+    }
+
+    static GameObjects buildButtons(){
+        GameObjects gameObjects =new GameObjects();
         return gameObjects;
     }
 
