@@ -1,7 +1,9 @@
 package main;
+import gamelogic.KeyInput;
 import helper.ImageLoader;
 
 import javax.swing.*;
+import java.awt.event.KeyListener;
 
 /**
  * Fenster, in welchem das Spiel ausgeführt wird (bitte nicht anfassen ohne zu fragen!!!!)
@@ -21,6 +23,11 @@ public class GameWindow {
 
         window.setLocationRelativeTo(null);
         window.setVisible(true);
+
+        window.setFocusable(true);
+        window.requestFocus();
+        window.addKeyListener((KeyListener) new KeyInput());
+
 
         gamePanel.run();}
 
