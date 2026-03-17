@@ -95,7 +95,7 @@ public class Storage extends GameObject implements Interactable {
     }
 
     /**
-     * Menge eines Items in einer bestimmten poition eines bestimmten Lagers setzen
+     * Menge eines Items in einer bestimmten position eines bestimmten Lagers setzen
      *
      * @param pos    betroffene Position
      * @param amount neue Menge
@@ -193,10 +193,10 @@ public class Storage extends GameObject implements Interactable {
      * @param ziehlStorage  Lager in welches die Items verschoben werden sollen
      * @param sourceStorage Lager aus dem die Items entnommen werden
      * @param sourcePos     Position des zu verschiebenden Items im Source lager
-     * @param ziehlPos      Position in die Verschoben wird
+     * @param zielPos      Position in die Verschoben wird
      */
-    public GameObjects addOneItem(GameObjects gameObjects, Storage sourceStorage, Storage ziehlStorage, int sourcePos, int ziehlPos) {
-        if (ziehlStorage.items[ziehlPos] == null) {
+    public GameObjects addOneItem(GameObjects gameObjects, Storage sourceStorage, Storage ziehlStorage, int sourcePos, int zielPos) {
+        if (ziehlStorage.items[zielPos] == null) {
             if (sourceStorage.amount[sourcePos] > 0) {
                 Item newItem;
                 if (sourceStorage.items[sourcePos] instanceof Drug){
@@ -204,17 +204,17 @@ public class Storage extends GameObject implements Interactable {
                 }else if (sourceStorage.items[sourcePos] instanceof Ingredient){
                     newItem= new Ingredient((Ingredient) sourceStorage.items[sourcePos]);
                 }else newItem =null;
-                ziehlStorage.items[ziehlPos] = newItem;
-                ziehlStorage.amount[ziehlPos]++;
+                ziehlStorage.items[zielPos] = newItem;
+                ziehlStorage.amount[zielPos]++;
                 sourceStorage.amount[sourcePos]--;
             }
             if (sourceStorage.amount[sourcePos] == 0) {
                 emptyPos(sourceStorage, sourcePos);
             }
-        } else if (ziehlStorage.items[ziehlPos].sameTypAs(sourceStorage.items[sourcePos])) {
+        } else if (ziehlStorage.items[zielPos].sameTypAs(sourceStorage.items[sourcePos])) {
             if (sourceStorage.amount[sourcePos] > 0) {
-                ziehlStorage.amount[ziehlPos]++;
-                sourceStorage.amount[ziehlPos]--;
+                ziehlStorage.amount[zielPos]++;
+                sourceStorage.amount[zielPos]--;
             }
             if (sourceStorage.amount[sourcePos] == 0) {
                 emptyPos(sourceStorage, sourcePos);
@@ -234,12 +234,12 @@ public class Storage extends GameObject implements Interactable {
      * @param ziehlStorage  Lager in welches die Items verschoben werden sollen
      * @param sourceStorage Lager aus dem die Items entnommen werden
      * @param sourcePos     Position des zu verschiebenden Items im Source lager
-     * @param ziehlPos      Position in die Verschoben wird
+     * @param zielPos      Position in die Verschoben wird
      */
-    public GameObjects addItems(GameObjects gameObjects, Storage sourceStorage, Storage ziehlStorage, int sourcePos, int ziehlPos) {
+    public GameObjects addItems(GameObjects gameObjects, Storage sourceStorage, Storage ziehlStorage, int sourcePos, int zielPos) {
         System.out.println("Taking item from " + sourceStorage.name + " to " + ziehlStorage.name);//Konsolen Output zum Schnellen Debuggen
         //Prüfen, ob der ausgewählte Zielslot Ler ist
-        if (ziehlStorage.items[ziehlPos] == null) {
+        if (ziehlStorage.items[zielPos] == null) {
             if (sourceStorage.amount[sourcePos] > 0) {
                 Item newItem;
                 if (sourceStorage.items[sourcePos] instanceof Drug){
@@ -247,16 +247,16 @@ public class Storage extends GameObject implements Interactable {
                 }else if (sourceStorage.items[sourcePos] instanceof Ingredient){
                     newItem= new Ingredient((Ingredient) sourceStorage.items[sourcePos]);
                 }else newItem =null;
-                ziehlStorage.items[ziehlPos] = newItem;
-                ziehlStorage.amount[ziehlPos] = sourceStorage.amount[sourcePos];
+                ziehlStorage.items[zielPos] = newItem;
+                ziehlStorage.amount[zielPos] = sourceStorage.amount[sourcePos];
                 sourceStorage.amount[sourcePos] = 0;
             }
             if (sourceStorage.amount[sourcePos] == 0) {
                 emptyPos(sourceStorage, sourcePos);
             }
-        }else if (ziehlStorage.items[ziehlPos].sameTypAs( sourceStorage.items[sourcePos]) ){//Prüfen, ob der ausgewählte Zielslot das einzulagernde Item Enthält
+        }else if (ziehlStorage.items[zielPos].sameTypAs( sourceStorage.items[sourcePos]) ){//Prüfen, ob der ausgewählte Zielslot das einzulagernde Item Enthält
             if (sourceStorage.amount[sourcePos] > 0) {
-                ziehlStorage.amount[ziehlPos] = ziehlStorage.amount[ziehlPos] + sourceStorage.amount[sourcePos];
+                ziehlStorage.amount[zielPos] = ziehlStorage.amount[zielPos] + sourceStorage.amount[sourcePos];
                 sourceStorage.amount[sourcePos] = 0;
             }
             if (sourceStorage.amount[sourcePos] == 0) {
@@ -285,9 +285,9 @@ public class Storage extends GameObject implements Interactable {
     @Override
     public GameObjects interact(GameObjects gameObjects, int button, int xPosObjekt, int yPosObjekt, int xMouse, int yMouse) {
         int columns = this.getColumns();
-        int xrelativeMousePosition = xMouse - xPosObjekt;
-        int yrelativeMousePosition = yMouse - yPosObjekt;
-        int mousePos = getMousePos(columns, xrelativeMousePosition, yrelativeMousePosition);
+        int xRelativeMousePosition = xMouse - xPosObjekt;
+        int yRelativeMousePosition = yMouse - yPosObjekt;
+        int mousePos = getMousePos(columns, xRelativeMousePosition, yRelativeMousePosition);
         System.out.println("Mouse in Position " + mousePos);
         Storage mouseStorage = getMouseStorage(gameObjects);
         assert mouseStorage != null;
@@ -317,10 +317,10 @@ public class Storage extends GameObject implements Interactable {
     }
 
     /**
-     * private hilfsmethode zum leren eines lagerslots
+     * private hilfsmethode zum lehren eines lagerslots
      *
-     * @param storage lager in welchem ein slott gelert werden soll
-     * @param pos     position die gelert werden soll
+     * @param storage lager in welchem ein slot gelehrt werden soll
+     * @param pos     position die gelehrt werden soll
      */
     private void emptyPos(Storage storage, int pos) {
         storage.amount[pos] = 0;
@@ -371,12 +371,12 @@ public class Storage extends GameObject implements Interactable {
     }
 
     public Point getLocalItemCoordinates(int pos) {
-        int tileZise = 32;
-        int colums = this.getColumns();
-        int row = pos / colums;
-        int colum = pos % colums;
-        int posX = colum * tileZise;
-        int posY = row * tileZise;
+        int tileSize = 32;
+        int columns = this.getColumns();
+        int row = pos / columns;
+        int colum = pos % columns;
+        int posX = colum * tileSize;
+        int posY = row * tileSize;
         return new Point(posX, posY);
     }
 }

@@ -75,10 +75,12 @@ public class GamePanel extends JPanel implements Runnable {
         if (allGameObjects!=null){
         for (int i = 0; i < allGameObjects.getSize(); i++) {
            GameObject aktuellesGameobjekt= allGameObjects.getGameObject(i);
+           //zeichnet das Bild des aktuellen Gameobjekts, wenn dieses sichtbar ist
            if (aktuellesGameobjekt.isVisible()){
             g2d.drawImage(aktuellesGameobjekt.getImg(),aktuellesGameobjekt.getPositionX(),aktuellesGameobjekt.getPositionY(),null);
-            if (aktuellesGameobjekt.getTextToDisplay()!=null&& !aktuellesGameobjekt.getTextToDisplay().isEmpty()){
 
+            //Zeichnet den Text, der mit dem Game Objekt verbunden ist
+            if (aktuellesGameobjekt.getTextToDisplay()!=null&& !aktuellesGameobjekt.getTextToDisplay().isEmpty()){
                 String text = aktuellesGameobjekt.getTextToDisplay();
                 int x = aktuellesGameobjekt.getPositionX();
                 int y = aktuellesGameobjekt.getPositionY();

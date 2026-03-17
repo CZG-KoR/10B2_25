@@ -13,7 +13,7 @@ import java.io.IOException;
  */
 public class ImageLoader {
     /**
-     * Standart-Methode zum Laden von Bildern aus dem resources Ordner
+     * Standard Methode zum Laden von Bildern aus dem resources Ordner
      * @param filename name des zu ladenden Bildes (mit Dateiendung) Bsp: "Beispeil.png"
      * @return Geladenes Bild
      */
@@ -23,21 +23,22 @@ public class ImageLoader {
     }
 
     /**
-     * methode zum Laden von Bildern aus dem resources Ordner welche sich in Unterordnern befinden
+     * Standard methode zum Laden von Bildern aus dem resources Ordner welche sich in Unterordnern befinden
      * @param path Pfad des Unterordners (nach einem Ordnernamen folgt ein /)
      *             Beispiel zum Laden eines Bsp. Bildes im resources Ordner in einem Bsp. Ordner: "Bsp/"
      * @param filename  name des zu ladenden Bildes (mit Dateiendung) Bsp: "Beispeil.png"
-     * @return Geldenes Bild
+     * @return Geladenes Bild
      */
     public static Image loadImage(String path, String filename){
-        Image image = new ImageIcon("resources/"+path+filename).getImage();
-        return image;
+        return loadImage(path+filename);
     }
 
     /**
-     * Standart-Methode zum Laden von Bildern aus dem resources Ordner
+     * Methode zum Laden von Bildern aus dem resources Ordner
+     * und einer Vergrößerung/Verkleinerung
      * @param filename name des zu ladenden Bildes (mit Dateiendung) Bsp: "Beispeil.png"
-     * @return Geladenes Bild
+     * @param scalingFaktor Faktor mit dem sowohl Höhe und Breite des Bildes gestreckt wird
+     * @return Geladenes und Bild
      */
     public static Image loadImage(String filename,double scalingFaktor){
         Image image = new ImageIcon("resources/"+filename).getImage();
@@ -48,24 +49,25 @@ public class ImageLoader {
     }
 
     /**
-     * methode zum Laden von Bildern aus dem resources Ordner welche sich in Unterordnern befinden
+     * Methode zum Laden von Bildern aus dem resources Ordner welche sich in Unterordnern befinden
+     * und einer Vergrößerung/Verkleinerung
      * @param path Pfad des Unterordners (nach einem Ordnernamen folgt ein /)
      *             Beispiel zum Laden eines Bsp. Bildes im resources Ordner in einem Bsp. Ordner: "Bsp/"
      * @param filename  name des zu ladenden Bildes (mit Dateiendung) Bsp: "Beispeil.png"
-     * @return Geldenes Bild
+     * @param scalingFaktor Faktor mit dem sowohl Höhe und Breite des Bildes gestreckt wird
+     * @return Geladenes Bild
      */
     public static Image loadImage(String path, String filename,double scalingFaktor){
-        Image image = new ImageIcon("resources/"+path+filename).getImage();
-        double h =image.getHeight(null);
-        double w= image.getWidth(null);
-        Image scaledImg = image.getScaledInstance((int) (w* scalingFaktor), (int) (h* scalingFaktor),Image.SCALE_DEFAULT);
-        return scaledImg;
+        return loadImage(path+filename,scalingFaktor);
     }
 
 
     /**
-     * Standart-Methode zum Laden von Bildern aus dem resources Ordner
+     * Methode zum Laden von Bildern aus dem resources Ordner
+     * und einer unabhängigen Vergrößerung/Verkleinerung der einzelnen Seien
      * @param filename name des zu ladenden Bildes (mit Dateiendung) Bsp: "Beispeil.png"
+     * @param scalingFaktorX Faktor mit dem die Breite des Bildes gestreckt wird
+     * @param scalingFaktorY Faktor mit dem die Höhe des Bildes gestreckt wird
      * @return Geladenes Bild
      */
     public static Image loadImage(String filename,int scalingFaktorX,int scalingFaktorY){
@@ -78,46 +80,67 @@ public class ImageLoader {
 
     /**
      * methode zum Laden von Bildern aus dem resources Ordner welche sich in Unterordnern befinden
+     * und einer unabhängigen Vergrößerung/Verkleinerung der einzelnen Seien
      * @param path Pfad des Unterordners (nach einem Ordnernamen folgt ein /)
      *             Beispiel zum Laden eines Bsp. Bildes im resources Ordner in einem Bsp. Ordner: "Bsp/"
      * @param filename  name des zu ladenden Bildes (mit Dateiendung) Bsp: "Beispeil.png"
-     * @return Geldenes Bild
+     * @param scalingFaktorX Faktor mit dem die Breite des Bildes gestreckt wird
+     * @param scalingFaktorY Faktor mit dem die Höhe des Bildes gestreckt wird
+     * @return Geladenes Bild
      */
     public static Image loadImage(String path, String filename,int scalingFaktorX,int scalingFaktorY){
-        Image image = new ImageIcon("resources/"+path+filename).getImage();
-        int h =image.getHeight(null);
-        int w= image.getWidth(null);
-        Image scaledImg = image.getScaledInstance(w* scalingFaktorX,h* scalingFaktorY,Image.SCALE_DEFAULT);
-        return scaledImg;
+        return loadImage(path+filename,scalingFaktorX,scalingFaktorY);
     }
 
 
-
-    public static Image loadTiledImage(String filename, int colums , int rows){
-       Image tiledImage =loadImage(filename+"Tiled-"+colums+"x"+rows+".png");
-       if (tiledImage.getWidth(null)==-1){
-        Image image = new ImageIcon("resources/"+filename).getImage();
-        BufferedImage  tiledBufferedImage= new BufferedImage(
-                colums*image.getWidth(null),
+    /**
+     * Methode zum Laden von Bildern aus dem resources Ordner
+     * und einem tilen des geladenen Bildes
+     * @param filename name des zu ladenden Bildes (mit Dateiendung) Bsp: "Beispeil.png"
+     * @param columns Anzahl der Spalten in denen das Bild horizontal getiled wird
+     * @param rows Anzahl der Zeilen in denen das Bild vertikal getiled wird
+     * @return Geladenes Bild
+     */
+    public static Image loadTiledImage(String filename, int columns , int rows){
+       Image tiledImage =loadImage(filename+"Tiled-"+columns+"x"+rows+".png"); //es wird versucht, das Image welches durch tilen entstehen soll zu laden (damit fals es bereits existiert keine neue version /kopie erstellt wird)
+       if (tiledImage.getWidth(null)==-1){                                     //wenn das Bild noch nicht existiert
+        Image image = loadImage(filename);                                             //wird das zu tilende Image geladen
+        BufferedImage  tiledBufferedImage= new BufferedImage(                          //es wird ein neues Buffered Image erstellt
+                columns*image.getWidth(null),
                 rows*image.getHeight(null),
                 BufferedImage.TYPE_INT_ARGB );
-        Graphics graphics = tiledBufferedImage.getGraphics();
-        for (int x = 0; x <colums; x++) {
+        Graphics graphics = tiledBufferedImage.getGraphics();                           //dieses wird einem Graphics objekt hinzugefügt
+        for (int x = 0; x <columns; x++) {                                              //es wird jede Position im Tiling Raster einmal durch eine kombination aus zwei schleifen angesteuert
             for (int y = 0; y <rows; y++) {
-                graphics.drawImage(image,x*image.getWidth(null),y*image.getHeight(null),null);
+                graphics.drawImage(image,x*image.getWidth(null),y*image.getHeight(null),null);  //asn jede Position des Rasters wird das zu tilende bild auf das graphics objekt gemalt
             }
         }
-        File f = new File( "resources/"+filename+"Tiled-"+colums+"x"+rows+".png" );
+        File f = new File( "resources/"+filename+"Tiled-"+columns+"x"+rows+".png" );        //es wird eine neue Datei erstellt
         try {
-            ImageIO.write( tiledBufferedImage, "PNG", f );
+            ImageIO.write( tiledBufferedImage, "PNG", f );                                 //und versucht das in Form des Buffered Image gespeicherte Bild als Png gespeichert
         }
         catch ( IOException x ) {
             x.printStackTrace();
         }
 
-        tiledImage = (Image) tiledBufferedImage;
+        tiledImage = tiledBufferedImage;                //das durch tilen erzeugte BufferedImage wird als Image gespeichert
        }
-        return (Image) tiledImage;
+        return  tiledImage;  // es wird das durch tilen erzeugte bild zurückgegeben
+    }
+
+    /**
+     * methode zum Laden von Bildern aus dem resources Ordner welche sich in Unterordnern befinden
+     * und einem tilen des geladenen Bildes
+     * @param path Pfad des Unterordners (nach einem Ordnernamen folgt ein /)
+     *             Beispiel zum Laden eines Bsp. Bildes im resources Ordner in einem Bsp. Ordner: "Bsp/"
+     * @param filename name des zu ladenden Bildes (mit Dateiendung) Bsp: "Beispeil.png"
+     * @param columns Anzahl der Spalten in denen das Bild horizontal getiled wird
+     * @param rows Anzahl der Zeilen in denen das Bild vertikal getiled wird
+     * @return Geladenes Bild
+     */
+    public static Image loadTiledImage(String path,String filename, int columns , int rows){
+       return loadTiledImage(path+filename,columns,rows);
+
     }
 
 

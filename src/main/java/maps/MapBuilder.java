@@ -6,7 +6,7 @@ public interface MapBuilder {
     static GameObjects buildMap(GameObjects gameObjects){
         gameObjects.addGameObjects(buildBackgrounds());
         gameObjects.addGameObjects(buildDecoration());
-        gameObjects.addGameObjects(buildStorges());
+        gameObjects.addGameObjects(buildStorages());
         gameObjects.addGameObjects(buildMenus());
         return gameObjects;
     };
@@ -20,7 +20,7 @@ public interface MapBuilder {
         return gameObjects;
     }
 
-    static GameObjects buildStorges(){
+    static GameObjects buildStorages(){
         GameObjects gameObjects =new GameObjects();
         return gameObjects;
     }
