@@ -2,7 +2,6 @@ package gameObject.butons;
 
 import gameObject.GameObject;
 import gameObject.GameObjects;
-import gameObject.Interactable;
 
 import java.awt.*;
 
@@ -33,17 +32,6 @@ public class VisibilityToggler extends Button {
 
         return gameObjects;
     }
-
-    @Override
-    public GameObjects interact(GameObjects gameObjects, int button) {
-        return gameObjects;
-    }
-
-    @Override
-    public GameObjects interact(GameObjects gameObjects, int button, int xPosObjekt, int yPosObjekt, int xMouse, int yMouse) {
-        return gameObjects;
-    }
-
 
 
     public GameObject getGameObjectToToggleVisibility() {

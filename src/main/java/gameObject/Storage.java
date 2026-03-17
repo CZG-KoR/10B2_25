@@ -334,10 +334,10 @@ public class Storage extends GameObject implements Interactable {
     }
 
     public static Storage getMouseStorage(GameObjects gameObjects) {
-        for (int i = 0; i < gameObjects.getGameObjects().size(); i++) {
-            if (gameObjects.getGameObjects().get(i) instanceof Storage) {
-                if (Objects.equals(((Storage) gameObjects.getGameObjects().get(i)).name, "mouseStorage")) {
-                    return ((Storage) gameObjects.getGameObjects().get(i));
+        for (int i = 0; i < gameObjects.getSize(); i++) {
+            if (gameObjects.getGameObject(i) instanceof Storage) {
+                if (Objects.equals(((Storage) gameObjects.getGameObject(i)).name, "mouseStorage")) {
+                    return ((Storage) gameObjects.getGameObject(i));
                 }
             }
         }
@@ -347,9 +347,9 @@ public class Storage extends GameObject implements Interactable {
 
     public GameObjects updateStorage(GameObjects gameObjects){
         Storage aktiveStorage = this;
-        for (int i = 0; i < gameObjects.getGameObjects().size(); i++) {
-            if (gameObjects.getGameObjects().get(i) instanceof Storage) {
-                if (Objects.equals(((Storage) gameObjects.getGameObjects().get(i)).getName(), aktiveStorage.getName())) {
+        for (int i = 0; i < gameObjects.getSize(); i++) {
+            if (gameObjects.getGameObject(i) instanceof Storage) {
+                if (Objects.equals(((Storage) gameObjects.getGameObject(i)).getName(), aktiveStorage.getName())) {
                     gameObjects.getGameObjects().set(i, aktiveStorage);
                 }
             }

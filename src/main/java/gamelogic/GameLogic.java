@@ -17,7 +17,7 @@ public class GameLogic extends MouseInput{
     public static GameObjects update(GameObjects gameObjects){
 
         //information für Statusmeldung in der Konsole
-        int lastGamObjectLength=gameObjects.getGameObjects().size();
+        int lastGamObjectLength=gameObjects.getSize();
         //System.out.println("started Updating");//Statusmeldung in der Konsole
 
         /*
@@ -75,9 +75,6 @@ public class GameLogic extends MouseInput{
                 KeyInput.aktiveKey=' ';
             }
 
-
-
-
         /*
         * alle child objekte Updaten
         * */
@@ -91,8 +88,8 @@ public class GameLogic extends MouseInput{
        * Folgendes sind statusmeldungen in Der Konsole
        * */
        //System.out.println("finished Updating");
-        if (lastGamObjectLength!=gameObjects.getGameObjects().size()){
-        System.out.println("GameObject-length "+gameObjects.getGameObjects().size());}
+        if (lastGamObjectLength!=gameObjects.getSize()){
+        System.out.println("GameObject-length "+gameObjects.getSize());}
 
         /*Rückgabe der neuen (geupdateten) gameObjects*/
         return gameObjects;
@@ -110,16 +107,16 @@ public class GameLogic extends MouseInput{
         int mouseX =MouseInput.mouseX;
         int mouseY =MouseInput.mouseY;
         //Schleife über alle Game Objekte
-        int size = gameObjects.getGameObjects().size();
+        int size = gameObjects.getSize();
         for (int i = 1; i <=size; i++) {
             //Game Objekte der Reihe nach von oben nach unten Durchgehen
-            GameObject gameObjectI =gameObjects.getGameObjects().get(size-i);
+            GameObject gameObjectI =gameObjects.getGameObject(size-i);
             if (gameObjectI.isVisible()){                                                       //Sichtbarkeit Prüfen
                 if (gameObjectI.isInteractable()){                                              //Interagierbarkeit Prüfen
                     if (gameObjectI.getPositionX()<mouseX){                                     //Maus Position Prüfen
                         if (gameObjectI.getPositionY()<mouseY){
-                            if (gameObjectI.getPositionX()+gameObjectI.getZiseX()>mouseX){
-                                if (gameObjectI.getPositionY()+gameObjectI.getZiseY()>mouseY){
+                            if (gameObjectI.getPositionX()+gameObjectI.getSizeX()>mouseX){
+                                if (gameObjectI.getPositionY()+gameObjectI.getSizeY()>mouseY){
 
                                     return gameObjectI;                                         //Game Objekt zurückgeben
                                 }
@@ -159,13 +156,13 @@ public class GameLogic extends MouseInput{
                 boolean dragging=false;  // status, ob bereits ein objekt gedraggt (mit der maus mitbewegt wird)
 
                 //alle Game Objekte durchgehen
-                for (int i = 0; i <gameObjects.getGameObjects().size(); i++) {
+                for (int i = 0; i <gameObjects.getSize(); i++) {
                     //Das aktuelle Game Objekt Setzen
-                    GameObject aktiveGameObject=gameObjects.getGameObjects().get(i);
+                    GameObject aktiveGameObject=gameObjects.getGameObject(i);
                     //Das aktuelle Game Objekt ist, nicht lehr
                     if (aktiveGameObject!=null){
                         //Das aktuelle Game Objekt ist an die maus gebunden und die Maus ist gedrückt
-                        if (aktiveGameObject.isLockedToMouse()&& MouseInput.mousepressed){
+                        if (aktiveGameObject.isLockedToMouse()&& MouseInput.mousePressed){
                             //das aktuelle Game Objekt ist ein Menü
                             if (aktiveGameObject instanceof Menu){
                                 //Errechnen und Speichern der absoluten Position
@@ -184,7 +181,7 @@ public class GameLogic extends MouseInput{
                             dragging=true;                                    //der Dragging Status wird auf wahr gesetzt
 
 
-                        }else if (aktiveGameObject.isLockedToMouse()&& !MouseInput.mousepressed){
+                        }else if (aktiveGameObject.isLockedToMouse()&& !MouseInput.mousePressed){
                             //Das aktuelle Game Objekt ist an die maus gebunden und die Maus ist nicht gedrückt
                             aktiveGameObject.setLockedToMouse(false);       //die Bindung zur Maus aufheben
                             aktiveGameObject.setInteractable(true);         //das aktuelle Game Objekt wieder interagierbar machen
@@ -195,10 +192,10 @@ public class GameLogic extends MouseInput{
             }
 
             //Die Maus ist gedrückt aber es wird noch kein Game Objekt gedraggt
-            if (MouseInput.mousepressed&& !dragging){
+            if (MouseInput.mousePressed && !dragging){
                 GameObject onObjekt =mouseIsOnObjekt(gameObjects); //Ausgewähltes GameObjekt setzten
                 if (onObjekt!=null){                               //prüfen, ob ein GameObjekt ausgewählt wurde
-                    if (onObjekt.isDragable()){                    //das ausgewählte GameObjekt ist Draggable
+                    if (onObjekt.isDraggable()){                    //das ausgewählte GameObjekt ist Draggable
                         onObjekt.setLockedToMouse(true);           //das ausgewählte GameObjekt an die Maus Binden
                         onObjekt.setInteractable(false);           //das ausgewählte GameObjekt nicht interagierbar machen
                                                                         //mit gedraggten GameObjekten soll nicht interagiert werden
@@ -229,16 +226,16 @@ public class GameLogic extends MouseInput{
         /*
         alle Game Objekte welche Child Objekte sind aus der haupt Game Objekt list Löschen
         */
-        for (int i = 0; i < gameObjects.getGameObjects().size(); i++) {         //alle GameObjekt durchgehen
-            if (gameObjects.getGameObjects().get(i)!=null) {                    //das GameObjekt ist nicht null
-                if (gameObjects.getGameObjects().get(i).isChildObject()) {      //das GameObjekt ist ein ChildObject
+        for (int i = 0; i < gameObjects.getSize(); i++) {         //alle GameObjekt durchgehen
+            if (gameObjects.getGameObject(i)!=null) {                    //das GameObjekt ist nicht null
+                if (gameObjects.getGameObject(i).isChildObject()) {      //das GameObjekt ist ein ChildObject
                     gameObjects.setGameObject(null, i);              //das GameObjekt nullen
                 }
             }
         }
 
-        for (int i = 0; i < gameObjects.getGameObjects().size(); i++) {         //alle GameObjekt durchgehen
-            GameObject aktiveGameObject = gameObjects.getGameObjects().get(i);  //aktives GameObjekt setzen
+        for (int i = 0; i < gameObjects.getSize(); i++) {         //alle GameObjekt durchgehen
+            GameObject aktiveGameObject = gameObjects.getGameObject(i);  //aktives GameObjekt setzen
 
             if (aktiveGameObject instanceof Storage) {                                  //Das GameObjekt ist ein Lager
                gameObjects=((Storage) aktiveGameObject).updateStorage(gameObjects);     //Das Lager Updaten
@@ -259,15 +256,15 @@ public class GameLogic extends MouseInput{
     * @param gameObjects  alle zu updatenden GameObjekte
     * */
    public static GameObjects openPayerInventory(GameObjects gameObjects){
-       for (int i = 0; i <gameObjects.getGameObjects().size(); i++) {           //alle GameObjekte durchgehen
-            GameObject aktiveGameObject =gameObjects.getGameObjects().get(i);   //das aktive GameObjekt setzen
+       for (int i = 0; i <gameObjects.getSize(); i++) {           //alle GameObjekte durchgehen
+            GameObject aktiveGameObject =gameObjects.getGameObject(i);   //das aktive GameObjekt setzen
             if (aktiveGameObject instanceof Menu){                              //das aktuelle Game Objekt ist ein Menü
                 if (((Menu) aktiveGameObject).getMenuGameObjects()!=null){      //die ChildGameObjekte des Menüs sind nicht null
 
                     //die ChildGameObjekte durchgehen
-                    for (int j = 0; j <((Menu) aktiveGameObject).getMenuGameObjects().getGameObjects().size(); j++) {
+                    for (int j = 0; j <((Menu) aktiveGameObject).getMenuGameObjects().getSize(); j++) {
                         //das aktive ChildGameObjekt setzen
-                         GameObject childObject =((Menu) aktiveGameObject).getMenuGameObjects().getGameObjects().get(j);
+                         GameObject childObject =((Menu) aktiveGameObject).getMenuGameObjects().getGameObject(j);
                          if (childObject instanceof Storage){   //das aktive ChildGameObjekt ist ein Lager
                              if (((Storage) childObject).getName().equals("playerInventory")){ //das aktive ChildGameObjekt ist das SpielerInventar
                                  aktiveGameObject.setVisible(true); //das Menü sichtbar machen
@@ -286,8 +283,8 @@ public class GameLogic extends MouseInput{
      * @param gameObjects   alle zu updatenden GameObjekte
      * */
    public static GameObjects closeAllMenus(GameObjects gameObjects){
-       for (int i = 0; i <gameObjects.getGameObjects().size(); i++) {           //alle GameObjekte durchgehen
-           GameObject aktiveGameObject =gameObjects.getGameObjects().get(i);   //das aktive GameObjekt setzen
+       for (int i = 0; i <gameObjects.getSize(); i++) {           //alle GameObjekte durchgehen
+           GameObject aktiveGameObject =gameObjects.getGameObject(i);   //das aktive GameObjekt setzen
            if (aktiveGameObject instanceof Menu){                              //das aktuelle Game Objekt ist ein Menü
               aktiveGameObject.setVisible(false);                              //das Menü schließen/unsichtbar machen
            }
@@ -295,17 +292,4 @@ public class GameLogic extends MouseInput{
        return gameObjects;      // Die geupdateten Gameobjekte zurückgeben
 
    }
-
-
-
-
-
-
-
-
-
-
-
-
-
 }

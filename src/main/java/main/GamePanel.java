@@ -73,8 +73,8 @@ public class GamePanel extends JPanel implements Runnable {
         Graphics2D g2d= (Graphics2D) g;
 
         if (allGameObjects!=null){
-        for (int i = 0; i < allGameObjects.getGameObjects().size(); i++) {
-           GameObject aktuellesGameobjekt= allGameObjects.getGameObjects().get(i);
+        for (int i = 0; i < allGameObjects.getSize(); i++) {
+           GameObject aktuellesGameobjekt= allGameObjects.getGameObject(i);
            if (aktuellesGameobjekt.isVisible()){
             g2d.drawImage(aktuellesGameobjekt.getImg(),aktuellesGameobjekt.getPositionX(),aktuellesGameobjekt.getPositionY(),null);
             if (aktuellesGameobjekt.getTextToDisplay()!=null&& !aktuellesGameobjekt.getTextToDisplay().isEmpty()){
@@ -82,7 +82,7 @@ public class GamePanel extends JPanel implements Runnable {
                 String text = aktuellesGameobjekt.getTextToDisplay();
                 int x = aktuellesGameobjekt.getPositionX();
                 int y = aktuellesGameobjekt.getPositionY();
-                Font font = new Font("Georgia", Font.ITALIC, 20);
+                Font font = new Font("Georgia", Font.BOLD, 20);
                 TextLayout textLayout = new TextLayout(text, font, g2d.getFontRenderContext());
                 g2d.setPaint(Color.BLACK);
                 textLayout.draw(g2d, x, y+32);
