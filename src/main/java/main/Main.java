@@ -6,11 +6,11 @@
 package main;
 
 /**
- * Main Methode zum Starten des Programms (bitte nicht anfassen ohne zu fragen!!!!)
+ * Main Methode zum Starten des Programms (bitte nicht anfassen, ohne es abzusprechen!!!!)
  */
 public class Main {
     public static void main(String[] args) {
-        System.out.println("Programm Start");
-        GameWindow.openWindow();
+        System.out.println("Programm Start"); //Statusmeldung in der Konsole
+        GameWindow.openWindow();              // öffnen des GameWindows
     }
 }

@@ -12,23 +12,24 @@ public abstract class Item extends GameObject {
 
 
 
-    public Item(Image img,int layer ,String name, int basevalue, boolean craftable) {
-        super(img,false,layer,0,0,0,0);
 
-        sizeX = 0;
-        sizeY =0;
-        try {
-            sizeX= img.getWidth(null);
-            sizeY = img.getHeight(null);
-        }catch (Exception e){
-            throw e;
-        }
 
+    public Item(Image img ,String name, int basevalue, boolean craftable) {
+        super(img,false,0,0,0);
         this.name = name;
         this.basevalue = basevalue;
         this.craftable = craftable;
+        setChildObject(true);
 
 
+    }
+
+    public Item(Item templateItem){
+        super(templateItem.getImg(),false,0,0,0);
+        this.name=templateItem.getName();
+        this.basevalue=templateItem.getBasevalue();
+        this.craftable=templateItem.craftable;
+        setChildObject(true);
     }
 
     public String getName() {
@@ -42,6 +43,12 @@ public abstract class Item extends GameObject {
     public abstract void buy(int amount);
     
     public abstract void sell(int amount);
-        
-    
+
+    public boolean sameTypAs(Item item2){
+        if (this.name==item2.getName()){
+            return true;
+        }
+        return false;
+    }
+
 }

@@ -1,28 +1,35 @@
 package main;
-
-import gameObject.GameObjects;
+import gamelogic.KeyInput;
+import helper.ImageLoader;
 
 import javax.swing.*;
 
 /**
- * Fenster, in welchem das Spiel ausgeführt wird (bitte nicht anfassen ohne zu fragen!!!!)
+ * Fenster, in welchem das Spiel ausgeführt wird (bitte nicht anfassen, ohne es abzusprechen!!!!)
  */
 public class GameWindow {
-public static GamePanel gamePanel;
+    /**
+     * Methode zum Öffnen des Fensters
+     */
     public static void openWindow(){
-    JFrame window = new JFrame();
-        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        window.setResizable(false);
-        window.setTitle("Pharmacy");
-       // GameObjects gameObjects;
+
+    JFrame window = new JFrame(); //Erstellen des Fensters als JFrame
+                                                                            //Setzen aller Wichtigen eigenschafen wie:
+        window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);              //was passiert, wenn das fenster geschlossen wird
+        window.setResizable(false);                                         //kann die größe geändert werden
+        window.setTitle("Pharmacy");                                        //Titel des Fensters
+        window.setIconImage(ImageLoader.loadImage("Logo.png"));     //Icon des Fensters
+        window.setFocusable(true);                                          //Fokussierbar (wichtig für KeyListener)
+        window.requestFocus();                                              //Fragt fokus an (wichtig für KeyListener)
+        window.addKeyListener(new KeyInput());                              //Key Listener wid Hinzugefügt
+
+    GamePanel gamePanel;                                                    //Game Panel wird erstellt
     gamePanel =new GamePanel();
-            window.add(gamePanel);
+            window.add(gamePanel);                                          //und dem Fenster hinzugefügt
             window.pack();
 
-        window.setLocationRelativeTo(null);
-        window.setVisible(true);
+        window.setLocationRelativeTo(null);                                 // die Position des Fensters wird festgelegt
+        window.setVisible(true);                                            // und es wird sichtbar gemacht
 
-        gamePanel.run();}
-
-
+        gamePanel.run();}                                                   //das start GamePanel wird ausgeführt
 }
